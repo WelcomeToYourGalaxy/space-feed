@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Space Front — live monitor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   The Space Front — a monitoring feed.
+   Everything scoped to .sf so it can be embedded anywhere.
+   ============================================================ */
+.sf {
+    --ink: #eef2f8;
+    --ink-dim: #9aa8bd;
+    --ink-faint: #67748a;
+    --line: rgba(255,255,255,0.10);
+    --line-soft: rgba(255,255,255,0.06);
+    --hot: #ff8f5e;
+    --cool: #7aa7ff;
+
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    color: var(--ink);
+    background:
+        radial-gradient(1100px 520px at 88% -10%, rgba(70,90,160,0.26), transparent 60%),
+        radial-gradient(760px 420px at 4% 4%, rgba(150,80,60,0.18), transparent 58%),
+        linear-gradient(180deg, #05070e 0%, #0a0f1c 60%, #070b14 100%);
+    line-height: 1.45;
+    width: 100%;
+    height: 100svh;
+    min-height: 540px;
+    margin: 0 auto;
+    padding: clamp(0.7rem, 1.6vw, 1.1rem) clamp(0.7rem, 2vw, 1.4rem) 0.6rem;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.45rem, 1vh, 0.75rem);
+    contain: layout style;
+}
+.sf * { box-sizing: border-box; }
+.sf a { color: inherit; }
+
+/* ---------- Header ---------- */
+.sf-head { flex: 0 0 auto; display: flex; align-items: baseline; justify-content: space-between; gap: clamp(0.8rem, 3vw, 2.2rem); flex-wrap: wrap; max-width: 1320px; width: 100%; margin: 0 auto; }
+.sf-title { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(1.35rem, 2.9vw, 2.25rem); line-height: 1.05; letter-spacing: -0.015em; margin: 0; color: #fbfcfe; display: flex; align-items: center; gap: 0.55rem; }
+.sf-title em { font-style: italic; color: var(--hot); }
+.sf-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,0.14); animation: sf-pulse 2.6s ease-in-out infinite; flex: 0 0 auto; }
+.sf-dot.idle { background: #94a3b8; box-shadow: 0 0 0 4px rgba(148,163,184,0.12); animation: none; }
+.sf-dot.error { background: #f87171; box-shadow: 0 0 0 4px rgba(248,113,113,0.14); animation: none; }
+@keyframes sf-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+.sf-lede { font-size: clamp(0.63rem, 0.85vw, 0.72rem); color: var(--ink-dim); max-width: 62ch; margin: 0; line-height: 1.45; }
+.sf-lede strong { color: var(--ink); font-weight: 500; }
+
+/* ---------- Panel ---------- */
+.sf-panel { flex: 1 1 auto; min-height: 0; max-width: 1320px; width: 100%; margin: 0 auto; border: 1px solid var(--line-soft); border-radius: 16px; background: rgba(255,255,255,0.022); overflow: hidden; display: flex; flex-direction: column; }
+.sf-bar { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 0.8rem; flex-wrap: wrap; padding: 0.45rem 0.9rem; border-bottom: 1px solid var(--line-soft); }
+.sf-status { font-size: 0.63rem; color: var(--ink-dim); margin: 0; }
+.sf-tools { display: flex; align-items: center; gap: 0.4rem; flex: 1 1 260px; justify-content: flex-end; max-width: 520px; }
+.sf-search { flex: 1 1 auto; min-width: 120px; font-family: inherit; font-size: 0.7rem; color: var(--ink); background: rgba(255,255,255,0.04); border: 1px solid var(--line-soft); border-radius: 8px; padding: 0.3rem 0.6rem; }
+.sf-search::placeholder { color: var(--ink-faint); }
+.sf-search:focus { outline: none; border-color: rgba(255,255,255,0.24); }
+.sf-btn { font-family: inherit; font-size: 0.62rem; letter-spacing: 0.06em; color: var(--ink); background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: 999px; padding: 0.28rem 0.7rem; cursor: pointer; flex: 0 0 auto; }
+.sf-btn:hover { background: rgba(255,255,255,0.10); border-color: rgba(255,255,255,0.24); }
+.sf-btn:disabled { opacity: 0.5; cursor: default; }
+.sf-progress { height: 2px; background: rgba(255,255,255,0.06); }
+.sf-progress-fill { height: 100%; width: 0; background: var(--hot); transition: width 0.35s ease; }
+
+.sf-filters { flex: 0 0 auto; display: flex; flex-direction: column; gap: 0.26rem; padding: 0.4rem 0.9rem; border-bottom: 1px solid var(--line-soft); }
+.sf-row { display: flex; align-items: center; gap: 0.35rem; flex-wrap: nowrap; overflow-x: auto; overflow-y: hidden; scrollbar-width: none; padding-bottom: 1px; }
+.sf-row::-webkit-scrollbar { height: 0; }
+.sf-key { position: sticky; left: 0; z-index: 1; flex: 0 0 auto; font-size: 0.53rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-faint); background: linear-gradient(90deg, #0a0f1c 72%, transparent); padding-right: 0.4rem; min-width: 62px; }
+.sf-chip { flex: 0 0 auto; font-family: inherit; font-size: 0.64rem; color: var(--ink-dim); background: rgba(255,255,255,0.03); border: 1px solid var(--line-soft); border-radius: 999px; padding: 0.2rem 0.6rem; cursor: pointer; white-space: nowrap; }
+.sf-chip:hover { color: var(--ink); border-color: rgba(255,255,255,0.22); }
+.sf-chip.on { color: #08111f; background: var(--chipcolor, #e8eef7); border-color: transparent; font-weight: 500; }
+.sf-chip .sf-n { opacity: 0.6; margin-left: 0.3rem; font-variant-numeric: tabular-nums; }
+.sf-chip.empty { opacity: 0.4; }
+
+.sf-list { flex: 1 1 auto; min-height: 130px; overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain; }
+.sf-item { display: block; padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--line-soft); text-decoration: none; color: inherit; }
+.sf-item:last-child { border-bottom: 0; }
+.sf-item:hover { background: rgba(255,255,255,0.035); }
+.sf-item.watch { border-left: 2px solid var(--hot); }
+.sf-meta { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; font-size: 0.57rem; color: var(--ink-faint); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 0.2rem; }
+.sf-lang { color: #cbd6e6; background: rgba(255,255,255,0.07); border-radius: 4px; padding: 0.06rem 0.32rem; letter-spacing: 0.08em; }
+.sf-flag { color: var(--hot); border: 1px solid rgba(255,143,94,0.5); border-radius: 4px; padding: 0.04rem 0.3rem; }
+.sf-item-title { font-size: 0.79rem; font-weight: 500; line-height: 1.35; color: #f0f4fa; }
+.sf-item:hover .sf-item-title { color: var(--cool); }
+.sf-snip { font-size: 0.66rem; line-height: 1.45; color: var(--ink-dim); margin-top: 0.15rem; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.sf-tags { display: flex; gap: 0.28rem; flex-wrap: wrap; margin-top: 0.3rem; }
+.sf-t { font-size: 0.53rem; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid; border-radius: 999px; padding: 0.08rem 0.42rem; }
+.sf-state { padding: 1.6rem 1rem; text-align: center; font-size: 0.74rem; color: var(--ink-dim); line-height: 1.6; }
+.sf-state strong { color: var(--ink); font-weight: 500; }
+.sf-more { display: block; width: 100%; border: 0; border-top: 1px solid var(--line-soft); background: rgba(255,255,255,0.02); font-family: inherit; font-size: 0.64rem; color: var(--ink-dim); padding: 0.45rem; cursor: pointer; letter-spacing: 0.06em; }
+.sf-more:hover { color: var(--ink); }
+
+/* ---------- Sheets ---------- */
+.sf-sheet { position: absolute; left: clamp(0.7rem, 2vw, 1.4rem); right: clamp(0.7rem, 2vw, 1.4rem); bottom: 2.6rem; z-index: 30; max-height: 66%; overflow-y: auto; display: none; border: 1px solid var(--line); border-radius: 14px; padding: 0.9rem 1rem; background: rgba(10,15,28,0.96); backdrop-filter: blur(10px); box-shadow: 0 24px 60px rgba(0,0,0,0.55); }
+.sf-sheet.open { display: block; }
+.sf-sheet-close { position: absolute; top: 0.5rem; right: 0.7rem; background: none; border: 0; color: var(--ink-faint); font-size: 1rem; cursor: pointer; font-family: inherit; line-height: 1; }
+.sf-sheet-close:hover { color: var(--ink); }
+.sf-note { font-size: 0.68rem; line-height: 1.6; color: var(--ink-dim); margin: 0 0 0.6rem; max-width: 96ch; }
+.sf-note strong { color: var(--ink); font-weight: 500; }
+.sf-src-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.1rem 0.9rem; }
+.sf-src { display: flex; justify-content: space-between; gap: 0.5rem; font-size: 0.62rem; color: var(--ink-dim); padding: 0.14rem 0; border-bottom: 1px solid rgba(255,255,255,0.04); }
+.sf-src span:last-child { font-variant-numeric: tabular-nums; color: var(--ink-faint); }
+.sf-src.fail span:last-child { color: #d98a8a; }
+
+.sf-foot { flex: 0 0 auto; max-width: 1320px; width: 100%; margin: 0 auto; padding-top: 0.4rem; border-top: 1px solid var(--line-soft); font-size: 0.57rem; color: var(--ink-faint); line-height: 1.4; display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.sf-foot-tools { display: flex; gap: 0.35rem; flex: 0 0 auto; }
+.sf-tab { font-family: inherit; font-size: 0.58rem; letter-spacing: 0.08em; color: var(--ink-dim); background: rgba(255,255,255,0.04); border: 1px solid var(--line-soft); border-radius: 999px; padding: 0.2rem 0.6rem; cursor: pointer; }
+.sf-tab:hover, .sf-tab.on { color: var(--ink); border-color: rgba(255,255,255,0.24); }
+
+@media (max-width: 900px) {
+    .sf { height: auto; min-height: 0; overflow: visible; }
+    .sf-panel { flex: 0 0 auto; }
+    .sf-list { max-height: 70vh; }
+    .sf-sheet { position: fixed; left: 0.6rem; right: 0.6rem; bottom: 0.6rem; max-height: 72vh; }
+}
+@media (prefers-reduced-motion: reduce) {
+    .sf *, .sf *::before, .sf *::after { animation: none !important; transition: none !important; }
+}
+</style>
+</head>
+<body style="margin:0; background:#05070e;">
+<div class="sf">
+
+    <header class="sf-head">
+        <h1 class="sf-title"><span class="sf-dot idle" id="sfDot"></span> The space <em>front</em></h1>
+        <p class="sf-lede">
+            <strong>Launches, orbits, contracts, land and law — worldwide, in 25 languages.</strong>
+            Who is putting what into orbit, who is paying for it, whose ground it leaves from, and who is
+            objecting. Watchdog rows are marked and can be filtered on their own.
+        </p>
+    </header>
+
+    <section class="sf-panel">
+        <div class="sf-bar">
+            <p class="sf-status" id="sfStatus">Loading the wire…</p>
+            <div class="sf-tools">
+                <input class="sf-search" id="sfSearch" type="search" placeholder="Starlink, spaceport, ASAT, subsidy…" aria-label="Filter headlines">
+                <button class="sf-btn" id="sfClear">Clear</button>
+                <button class="sf-btn" id="sfRefresh">Refresh</button>
+            </div>
+        </div>
+        <div class="sf-progress"><div class="sf-progress-fill" id="sfProgress"></div></div>
+
+        <div class="sf-filters">
+            <div class="sf-row" id="sfTopicRow"><span class="sf-key">Subject</span></div>
+            <div class="sf-row" id="sfRegionRow"><span class="sf-key">Source</span></div>
+            <div class="sf-row" id="sfLangRow"><span class="sf-key">Language</span></div>
+            <div class="sf-row" id="sfWhenRow"><span class="sf-key">Window</span></div>
+        </div>
+
+        <div class="sf-list" id="sfList"><div class="sf-state">Loading the wire…</div></div>
+    </section>
+
+    <div class="sf-sheet" id="sfSheetAbout" role="dialog" aria-label="How this feed works">
+        <button class="sf-sheet-close" data-close aria-label="Close">×</button>
+        <p class="sf-note">
+            <strong>What this is.</strong> A monitoring feed for the space front: the launch industry, orbital
+            infrastructure, military use of orbit, the money moving through it, the law being written around it,
+            and the land it is built on. Nothing here is written or summarised — headlines and snippets are the
+            publishers' own, every row links to the original, and no model touches the text.
+        </p>
+        <p class="sf-note">
+            <strong>How a story gets in.</strong> It has to name something unambiguously about spaceflight — a
+            rocket, a satellite, a spaceport, an agency, a company, a treaty. Words that only sometimes mean space
+            (launch, mission, orbit, constellation, debris) never qualify a story on their own, which is what keeps
+            product launches and football fixtures out. Each story is then tagged with every subject it matches, so
+            a military payload on a commercial rocket appears under both.
+        </p>
+        <p class="sf-note">
+            <strong>Watchdog wires.</strong> Trade press covers contracts and countdowns closely and covers
+            protests, lawsuits, environmental reviews, subsidies and land disputes thinly. Eight searches run
+            specifically for those, and everything they return is tagged <em>Protest &amp; accountability</em> and
+            marked in the list. Filter to that subject to see the front as an activist rather than an investor.
+        </p>
+        <p class="sf-note">
+            <strong>Limits worth knowing.</strong> Google News caps a query at roughly 100 results over about
+            30 days, so a heavy month in one language gets truncated. A regional edition often carries a syndicated
+            wire story rather than local reporting, which inflates a language count without adding a local view. And
+            coverage is uneven by design of the media, not of this feed: expect Swahili, Bengali and Persian to read
+            near zero most days. The counts are shown rather than hidden.
+        </p>
+    </div>
+
+    <div class="sf-sheet" id="sfSheetSources" role="dialog" aria-label="Sources and coverage">
+        <button class="sf-sheet-close" data-close aria-label="Close">×</button>
+        <p class="sf-note">
+            Every wire read on the last harvest, with what each returned. A wire that could not be reached says so
+            rather than disappearing.
+        </p>
+        <div class="sf-src-grid" id="sfSrcGrid"></div>
+    </div>
+
+    <footer class="sf-foot">
+        <span>Harvested every two hours from trade press, institutional newsrooms, policy desks, regional editions in 25 languages, and dedicated watchdog searches. Headlines belong to their publishers.</span>
+        <span class="sf-foot-tools">
+            <button class="sf-tab" data-sheet="sfSheetAbout">How this works</button>
+            <button class="sf-tab" data-sheet="sfSheetSources">Sources &amp; coverage</button>
+        </span>
+    </footer>
+</div>
+
+<script>
+(function () {
+'use strict';
+
+const REPO = 'WelcomeToYourGalaxy/space-feed';
+const BRANCH = 'main';
+const ENDPOINTS = [
+    () => 'https://raw.githubusercontent.com/' + REPO + '/' + BRANCH + '/wire_space.json?t=' + Date.now(),
+    () => 'https://cdn.jsdelivr.net/gh/' + REPO + '@' + BRANCH + '/wire_space.json'
+];
+
+const TOPIC_COLOR = {
+    launch: '#ff8f5e', orbit: '#7aa7ff', military: '#e2637b', industry: '#f0c46a',
+    policy: '#9ad3c0', human: '#c3b8e8', exploration: '#8fd8ee', resources: '#d59fd0',
+    environment: '#7fd18c', accountability: '#ffb454'
+};
+const WINDOWS = [
+    { id: 'd1', label: '24 hours', ms: 864e5 },
+    { id: 'd7', label: '7 days', ms: 7 * 864e5 },
+    { id: 'd30', label: '30 days', ms: 30 * 864e5 },
+    { id: 'all', label: 'Everything', ms: null }
+];
+
+const state = { items: [], topics: [], languages: {}, regions: [], sources: [], generated: null,
+                topic: 'all', region: 'all', langs: new Set(), when: 'all', query: '',
+                shown: 50, loading: false };
+
+const $list = document.getElementById('sfList');
+const $status = document.getElementById('sfStatus');
+const $dot = document.getElementById('sfDot');
+const $prog = document.getElementById('sfProgress');
+const $topicRow = document.getElementById('sfTopicRow');
+const $regionRow = document.getElementById('sfRegionRow');
+const $langRow = document.getElementById('sfLangRow');
+const $whenRow = document.getElementById('sfWhenRow');
+const $search = document.getElementById('sfSearch');
+const $srcGrid = document.getElementById('sfSrcGrid');
+const $refresh = document.getElementById('sfRefresh');
+const $more = document.createElement('button');
+$more.className = 'sf-more';
+$more.addEventListener('click', () => { state.shown += 50; render(); });
+
+function esc(s) { return (s || '').replace(/[&<>"']/g, c => ({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[c])); }
+function timeAgo(ts) {
+    if (!ts) return 'undated';
+    const m = Math.round((Date.now() - ts) / 60000);
+    if (m < 1) return 'just now';
+    if (m < 60) return m + 'm ago';
+    const h = Math.round(m / 60);
+    if (h < 24) return h + 'h ago';
+    const d = Math.round(h / 24);
+    return d < 30 ? d + 'd ago' : new Date(ts).toISOString().slice(0, 10);
+}
+function langName(c) { return state.languages[c] || c; }
+function topicLabel(id) { const t = state.topics.find(t => t.id === id); return t ? t.label : id; }
+function setStatus(text, cls) { $status.textContent = text; $dot.className = 'sf-dot' + (cls ? ' ' + cls : ''); }
+
+async function load() {
+    if (state.loading) return;
+    state.loading = true; $refresh.disabled = true; $prog.style.width = '40%';
+    setStatus('Loading the wire…', '');
+
+    let data = null, err = null;
+    for (const ep of ENDPOINTS) {
+        try {
+            const res = await fetch(ep(), { cache: 'no-store' });
+            if (!res.ok) { err = 'HTTP ' + res.status; continue; }
+            data = await res.json(); break;
+        } catch (e) { err = e.message; }
+    }
+    $prog.style.width = '100%';
+
+    if (!data || !Array.isArray(data.items)) {
+        state.loading = false; $refresh.disabled = false; $prog.style.width = '0';
+        setStatus('The wire could not be read' + (err ? ' (' + err + ')' : '') + '. Press Refresh.', 'error');
+        render(); return;
+    }
+
+    state.items = data.items.map(i => ({
+        title: i.t, link: i.u, outlet: i.o, lang: i.g, region: i.r,
+        kind: i.k, ts: i.d, snippet: i.s, topics: i.x || ['industry']
+    }));
+    state.topics = data.topics || [];
+    state.languages = data.languages || {};
+    state.regions = data.regions || [];
+    state.sources = data.sources || [];
+    state.generated = data.generated ? Date.parse(data.generated) : null;
+
+    buildChips(); renderSources();
+
+    const c = data.counts || {};
+    const ageH = state.generated ? (Date.now() - state.generated) / 3600000 : null;
+    const watch = state.items.filter(i => i.kind === 'watchdog' || i.topics.indexOf('accountability') !== -1).length;
+    setStatus(
+        (c.stories || state.items.length) + ' stories · ' + watch + ' flagged for accountability · ' +
+        (c.languages || new Set(state.items.map(i => i.lang)).size) + ' languages · ' +
+        (c.wires_ok || '?') + '/' + (c.wires_total || '?') + ' wires answered · harvested ' +
+        (state.generated ? timeAgo(state.generated) : 'unknown'),
+        ageH !== null && ageH > 6 ? 'idle' : ''
+    );
+
+    state.loading = false; $refresh.disabled = false;
+    setTimeout(() => { $prog.style.width = '0'; }, 400);
+    render();
+}
+
+function withinWindow(i) {
+    const w = WINDOWS.find(w => w.id === state.when);
+    if (!w || !w.ms) return true;
+    if (!i.ts) return false;
+    return (Date.now() - i.ts) <= w.ms;
+}
+
+function visible() {
+    const q = state.query.toLowerCase();
+    return state.items.filter(i => {
+        if (state.topic !== 'all' && i.topics.indexOf(state.topic) === -1) return false;
+        if (state.region !== 'all' && i.region !== state.region) return false;
+        if (state.langs.size && !state.langs.has(i.lang)) return false;
+        if (!withinWindow(i)) return false;
+        if (q && (i.title + ' ' + i.snippet + ' ' + i.outlet).toLowerCase().indexOf(q) === -1) return false;
+        return true;
+    }).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+}
+
+function render() {
+    const items = visible(), slice = items.slice(0, state.shown);
+    if (!slice.length) {
+        $list.innerHTML = '<div class="sf-state">' + (
+            state.loading ? 'Loading the wire…'
+            : state.items.length ? '<strong>Nothing matches these filters.</strong><br>Widen the window, the subject or the language.'
+            : '<strong>No stories loaded.</strong><br>Press Refresh, or check that the harvester has run.'
+        ) + '</div>';
+    } else {
+        $list.innerHTML = slice.map(i => {
+            const tags = i.topics.map(id => {
+                const c = TOPIC_COLOR[id] || '#9fb0c8';
+                return '<span class="sf-t" style="color:' + c + ';border-color:' + c + '55">' + esc(topicLabel(id)) + '</span>';
+            }).join('');
+            const flagged = i.kind === 'watchdog' || i.topics.indexOf('accountability') !== -1;
+            return '<a class="sf-item' + (flagged ? ' watch' : '') + '" href="' + esc(i.link) + '" target="_blank" rel="noopener noreferrer">' +
+                '<div class="sf-meta"><span class="sf-lang">' + esc(langName(i.lang)) + '</span>' +
+                '<span>' + esc(i.outlet) + '</span><span>' + esc(i.region) + '</span>' +
+                (flagged ? '<span class="sf-flag">watchdog</span>' : '') +
+                '<span>' + timeAgo(i.ts) + '</span></div>' +
+                '<div class="sf-item-title">' + esc(i.title) + '</div>' +
+                (i.snippet ? '<div class="sf-snip">' + esc(i.snippet) + '</div>' : '') +
+                '<div class="sf-tags">' + tags + '</div></a>';
+        }).join('');
+        if (items.length > state.shown) {
+            $more.textContent = 'Show more (' + (items.length - state.shown) + ' remaining)';
+            $list.appendChild($more);
+        }
+    }
+    chipCounts();
+}
+
+function chip(row, key, value, label, color) {
+    const c = document.createElement('button');
+    c.className = 'sf-chip';
+    c.dataset[key] = value;
+    if (color) c.style.setProperty('--chipcolor', color);
+    c.innerHTML = esc(label) + ' <span class="sf-n"></span>';
+    row.appendChild(c);
+    return c;
+}
+
+function buildChips() {
+    [$topicRow, $regionRow, $langRow, $whenRow].forEach(r => r.querySelectorAll('.sf-chip').forEach(c => c.remove()));
+
+    chip($topicRow, 'topic', 'all', 'All').classList.add('on');
+    state.topics.forEach(t => chip($topicRow, 'topic', t.id, t.label, TOPIC_COLOR[t.id]));
+
+    chip($regionRow, 'region', 'all', 'All').classList.add('on');
+    state.regions.forEach(r => chip($regionRow, 'region', r, r));
+
+    Object.keys(state.languages).sort((a, b) => langName(a).localeCompare(langName(b)))
+        .forEach(code => chip($langRow, 'lang', code, langName(code)));
+
+    WINDOWS.forEach(w => {
+        const c = chip($whenRow, 'when', w.id, w.label);
+        if (w.id === state.when) c.classList.add('on');
+    });
+}
+
+function chipCounts() {
+    const q = state.query.toLowerCase();
+    const base = state.items.filter(i =>
+        (!q || (i.title + ' ' + i.snippet).toLowerCase().indexOf(q) !== -1) && withinWindow(i));
+    $topicRow.querySelectorAll('.sf-chip').forEach(c => {
+        const id = c.dataset.topic;
+        const n = id === 'all' ? base.length : base.filter(i => i.topics.indexOf(id) !== -1).length;
+        c.querySelector('.sf-n').textContent = n;
+        c.classList.toggle('empty', n === 0 && id !== 'all');
+    });
+    $regionRow.querySelectorAll('.sf-chip').forEach(c => {
+        const r = c.dataset.region;
+        const n = r === 'all' ? base.length : base.filter(i => i.region === r).length;
+        c.querySelector('.sf-n').textContent = n;
+        c.classList.toggle('empty', n === 0 && r !== 'all');
+    });
+    $langRow.querySelectorAll('.sf-chip').forEach(c => {
+        const n = base.filter(i => i.lang === c.dataset.lang).length;
+        c.querySelector('.sf-n').textContent = n;
+        c.classList.toggle('empty', n === 0);
+    });
+    $whenRow.querySelectorAll('.sf-chip').forEach(c => {
+        const w = WINDOWS.find(w => w.id === c.dataset.when);
+        const n = state.items.filter(i => !w.ms ? true : (i.ts && (Date.now() - i.ts) <= w.ms)).length;
+        c.querySelector('.sf-n').textContent = n;
+    });
+}
+
+function renderSources() {
+    $srcGrid.innerHTML = state.sources.map(s =>
+        '<div class="sf-src ' + (s.ok ? '' : 'fail') + '"><span>' + esc(s.name) + '</span>' +
+        '<span>' + (s.ok ? s.kept + ' kept' : 'unreachable') + '</span></div>').join('');
+}
+
+/* ---- Wiring ---- */
+function single(row, key) {
+    row.addEventListener('click', e => {
+        const c = e.target.closest('.sf-chip'); if (!c) return;
+        state[key] = c.dataset[key]; state.shown = 50;
+        row.querySelectorAll('.sf-chip').forEach(x => x.classList.toggle('on', x === c));
+        render();
+    });
+}
+single($topicRow, 'topic');
+single($regionRow, 'region');
+single($whenRow, 'when');
+
+$langRow.addEventListener('click', e => {
+    const c = e.target.closest('.sf-chip'); if (!c) return;
+    const code = c.dataset.lang;
+    if (state.langs.has(code)) state.langs.delete(code); else state.langs.add(code);
+    c.classList.toggle('on', state.langs.has(code));
+    state.shown = 50; render();
+});
+
+$refresh.addEventListener('click', load);
+document.getElementById('sfClear').addEventListener('click', () => {
+    state.topic = 'all'; state.region = 'all'; state.langs.clear(); state.when = 'all';
+    state.query = ''; state.shown = 50; $search.value = '';
+    $topicRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.topic === 'all'));
+    $regionRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.region === 'all'));
+    $langRow.querySelectorAll('.sf-chip').forEach(c => c.classList.remove('on'));
+    $whenRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.when === 'all'));
+    render();
+});
+let timer;
+$search.addEventListener('input', e => {
+    clearTimeout(timer); const v = e.target.value;
+    timer = setTimeout(() => { state.query = v; state.shown = 50; render(); }, 180);
+});
+
+document.querySelectorAll('.sf-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+        const sheet = document.getElementById(tab.dataset.sheet);
+        const opening = !sheet.classList.contains('open');
+        document.querySelectorAll('.sf-sheet').forEach(s => s.classList.remove('open'));
+        document.querySelectorAll('.sf-tab').forEach(t => t.classList.remove('on'));
+        if (opening) { sheet.classList.add('open'); tab.classList.add('on'); }
+    });
+});
+document.querySelectorAll('.sf-sheet [data-close]').forEach(b => {
+    b.addEventListener('click', () => {
+        b.closest('.sf-sheet').classList.remove('open');
+        document.querySelectorAll('.sf-tab').forEach(t => t.classList.remove('on'));
+    });
+});
+document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    document.querySelectorAll('.sf-sheet').forEach(s => s.classList.remove('open'));
+    document.querySelectorAll('.sf-tab').forEach(t => t.classList.remove('on'));
+});
+
+load();
+setInterval(() => { if (!document.hidden) load(); }, 15 * 60 * 1000);
+})();
+</script>
+</body>
+</html>

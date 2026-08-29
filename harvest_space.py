@@ -3,9 +3,9 @@
 harvest_space.py — the space-front wire: industry, launches, orbit, policy and
 the accountability stories that trade press under-reports.
 
-Shares its plumbing (fetching, feed parsing, word-edge matching, deduplication)
-with harvest.py, and defines its own gate and its own subjects. Reads
-sources_space.json, writes wire_space.json. Standard library only.
+Self-contained: fetching, feed parsing, word-edge matching and deduplication are
+all in this file. Reads sources_space.json, writes wire_space.json. Standard
+library only — no dependencies, no API keys, no model calls.
 
     python3 harvest_space.py
     python3 harvest_space.py --dry-run
@@ -18,11 +18,16 @@ import os
 import re
 import sys
 import time
+import gzip
+import html
+import io
+import urllib.error
 import urllib.parse
+import urllib.request
+import xml.etree.ElementTree as ET
 from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
-
-import harvest as core
+from email.utils import parsedate_to_datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCES_PATH = os.path.join(HERE, "sources_space.json")
@@ -31,6 +36,175 @@ OUT_PATH = os.path.join(HERE, "wire_space.json")
 RETAIN_DAYS = 30
 MAX_ITEMS = 1200
 WORKERS = 6
+
+# --------------------------------------------------------------------------
+# Shared plumbing: fetching, feed parsing, word-edge matching, fingerprints.
+# Identical to the astrobiology harvester's, inlined so this repository
+# stands on its own.
+# --------------------------------------------------------------------------
+USER_AGENT = ("Mozilla/5.0 (compatible; space-life-news/1.0; "
+              "+https://github.com/WelcomeToYourGalaxy/space-life-news)")
+
+TIMEOUT = 25
+
+SNIPPET_CHARS = 240
+
+TAG_RE = re.compile(r"<[^>]+>")
+
+WS_RE = re.compile(r"\s+")
+
+PUNCT_RE = re.compile(r"[^\w\s]", re.UNICODE)
+
+def build_gnews_url(loc):
+    q = loc["query"] + " when:30d"
+    return ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q) +
+            "&hl=" + loc["hl"] + "&gl=" + loc["gl"] + "&ceid=" + loc["ceid"])
+
+def fetch(url, tries=3):
+    last = None
+    for attempt in range(tries):
+        try:
+            req = urllib.request.Request(url, headers={
+                "User-Agent": USER_AGENT,
+                "Accept": "application/rss+xml, application/atom+xml, application/xml;q=0.9, */*;q=0.8",
+                "Accept-Encoding": "gzip",
+                "Accept-Language": "*",
+            })
+            with urllib.request.urlopen(req, timeout=TIMEOUT) as resp:
+                raw = resp.read()
+                if resp.headers.get("Content-Encoding") == "gzip":
+                    raw = gzip.GzipFile(fileobj=io.BytesIO(raw)).read()
+                return raw
+        except Exception as exc:                       # noqa: BLE001 — report, don't crash the run
+            last = exc
+            time.sleep(1.5 * (attempt + 1))
+    print("  ! unreachable: %s (%s)" % (url[:90], last), file=sys.stderr)
+    return None
+
+def strip_ns(tag):
+    return tag.split("}", 1)[1] if "}" in tag else tag
+
+def text_of(el):
+    return WS_RE.sub(" ", html.unescape(TAG_RE.sub(" ", el.text or ""))).strip() if el is not None else ""
+
+def child(node, *names):
+    for kid in node:
+        if strip_ns(kid.tag) in names:
+            return kid
+    return None
+
+def parse_date(raw):
+    if not raw:
+        return None
+    raw = raw.strip()
+    try:
+        dt = parsedate_to_datetime(raw)
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return int(dt.timestamp() * 1000)
+    except Exception:  # noqa: BLE001
+        pass
+    try:
+        dt = datetime.fromisoformat(raw.replace("Z", "+00:00"))
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=timezone.utc)
+        return int(dt.timestamp() * 1000)
+    except Exception:  # noqa: BLE001
+        return None
+
+def parse_feed(raw, src):
+    try:
+        root = ET.fromstring(raw)
+    except ET.ParseError:
+        # Some publishers serve a stray byte before the declaration.
+        try:
+            root = ET.fromstring(raw[raw.index(b"<"):])
+        except Exception:  # noqa: BLE001
+            return []
+
+    nodes = [n for n in root.iter() if strip_ns(n.tag) == "item"]
+    atom = False
+    if not nodes:
+        nodes = [n for n in root.iter() if strip_ns(n.tag) == "entry"]
+        atom = True
+
+    out = []
+    for n in nodes:
+        title = text_of(child(n, "title"))
+        if atom:
+            link = ""
+            for kid in n:
+                if strip_ns(kid.tag) == "link" and kid.get("rel", "alternate") == "alternate":
+                    link = kid.get("href", "")
+                    break
+        else:
+            link_el = child(n, "link")
+            link = (link_el.text or "").strip() if link_el is not None else ""
+            if not link:
+                link = text_of(child(n, "guid"))
+        if not title or not link:
+            continue
+
+        outlet_el = child(n, "source")
+        outlet = text_of(outlet_el) if outlet_el is not None else ""
+        if outlet and title.endswith(" - " + outlet):
+            title = title[: -(len(outlet) + 3)].strip()
+        elif not outlet and src["name"].startswith("Google News") and " - " in title:
+            # Google News appends the outlet to the headline when it omits <source>.
+            head, _, tail = title.rpartition(" - ")
+            if head and 2 <= len(tail) <= 45:
+                title, outlet = head.strip(), tail.strip()
+
+        stamp = parse_date(text_of(child(n, "pubDate", "published", "updated", "date")))
+        snippet = text_of(child(n, "description", "summary", "content"))[:SNIPPET_CHARS]
+
+        out.append({
+            "t": title,
+            "u": link,
+            "o": outlet or src["name"].replace("Google News · ", ""),
+            "g": src["lang"],
+            "r": src["region"],
+            "k": src.get("kind", "news"),
+            "d": stamp,
+            "s": snippet,
+            "w": src["name"],
+        })
+    return out
+
+def _compile(term):
+    if any(ord(ch) > 0x24F for ch in term):        # non-Latin script
+        return term
+    if term.endswith("*"):
+        return re.compile(r"(?<![a-z0-9])" + re.escape(term[:-1]) + r"[a-z0-9\-]*", re.I)
+    return re.compile(r"(?<![a-z0-9])" + re.escape(term) + r"(?![a-z0-9])", re.I)
+
+def _compile_all(terms):
+    return [_compile(t) for t in terms]
+
+def hit(text, compiled):
+    """True when any compiled term matches."""
+    for c in compiled:
+        if isinstance(c, str):
+            if c in text:
+                return True
+        elif c.search(text):
+            return True
+    return False
+
+def fingerprint(title):
+    norm = PUNCT_RE.sub(" ", title.lower())
+    return " ".join(WS_RE.sub(" ", norm).strip().split()[:9])
+
+def canon_url(url):
+    try:
+        parts = urllib.parse.urlsplit(url)
+        query = urllib.parse.parse_qsl(parts.query)
+        query = [(k, v) for k, v in query if not k.lower().startswith("utm_")]
+        return urllib.parse.urlunsplit((parts.scheme, parts.netloc, parts.path.rstrip("/"),
+                                        urllib.parse.urlencode(query), ""))
+    except Exception:  # noqa: BLE001
+        return url
+
 
 # --------------------------------------------------------------------------
 # Subjects.  Each story is tagged with every subject it matches, so a launch
@@ -234,10 +408,10 @@ BLOCK = [
     "champions league", "europa league", "space jam",
 ]
 
-ANCHOR_C = core._compile_all(ANCHOR)
-AMBIGUOUS_C = core._compile_all(AMBIGUOUS)
-BLOCK_C = core._compile_all(BLOCK)
-TOPICS_C = [(tid, label, [(core._compile(t), core._compile_all(g) if g else None) for t, g in terms])
+ANCHOR_C = _compile_all(ANCHOR)
+AMBIGUOUS_C = _compile_all(AMBIGUOUS)
+BLOCK_C = _compile_all(BLOCK)
+TOPICS_C = [(tid, label, [(_compile(t), _compile_all(g) if g else None) for t, g in terms])
             for tid, label, terms in TOPICS]
 
 
@@ -245,18 +419,18 @@ def relevant(text):
     """An anchor keeps a story on its own.  An ambiguous term — launch, mission,
     orbit, constellation — never keeps one by itself; it needs an anchor beside
     it, which is what separates a rocket launch from a product launch."""
-    if core.hit(text, BLOCK_C):
+    if hit(text, BLOCK_C):
         return False
-    return core.hit(text, ANCHOR_C)
+    return hit(text, ANCHOR_C)
 
 
 def topics_for(text):
     hits = []
     for tid, _label, terms in TOPICS_C:
         for term, guards in terms:
-            if not core.hit(text, [term]):
+            if not hit(text, [term]):
                 continue
-            if guards and not core.hit(text, guards):
+            if guards and not hit(text, guards):
                 continue
             hits.append(tid)
             break
@@ -275,7 +449,7 @@ def load_sources():
             srcs.append({
                 "name": ("Google News · " if block == "gnews" else "Watchdog · ") + loc["label"],
                 "lang": loc["lang"], "region": loc["region"], "kind": kind,
-                "url": core.build_gnews_url(loc),
+                "url": build_gnews_url(loc),
             })
     return srcs, cfg
 
@@ -291,7 +465,7 @@ def run(dry_run=False, fixtures=None):
                 return src, None
             with open(path, "rb") as fh:
                 return src, fh.read()
-        return src, core.fetch(src["url"])
+        return src, fetch(src["url"])
 
     results = []
     with ThreadPoolExecutor(max_workers=WORKERS) as pool:
@@ -309,8 +483,8 @@ def run(dry_run=False, fixtures=None):
     seen_fp, seen_url, items = set(), set(), []
 
     def absorb(row):
-        fp = core.fingerprint(row["t"])
-        cu = core.canon_url(row["u"])
+        fp = fingerprint(row["t"])
+        cu = canon_url(row["u"])
         if fp in seen_fp or cu in seen_url:
             return False
         seen_fp.add(fp)
@@ -324,7 +498,7 @@ def run(dry_run=False, fixtures=None):
         if raw:
             stat["ok"] = True
             ok_count += 1
-            for row in core.parse_feed(raw, src):
+            for row in parse_feed(raw, src):
                 text = (row["t"] + " " + row["s"]).lower()
                 if not relevant(text):
                     continue
@@ -336,7 +510,7 @@ def run(dry_run=False, fixtures=None):
         stats.append(stat)
         print("  %-36s %s" % (src["name"][:36], "unreachable" if not raw else "%d kept" % stat["kept"]))
 
-    fresh_urls = {core.canon_url(i["u"]) for i in items}
+    fresh_urls = {canon_url(i["u"]) for i in items}
     for row in previous:
         if "x" in row:
             absorb(row)
@@ -345,7 +519,7 @@ def run(dry_run=False, fixtures=None):
     items = [i for i in items if (i.get("d") or cutoff + 1) >= cutoff]
     items.sort(key=lambda i: i.get("d") or 0, reverse=True)
     items = items[:MAX_ITEMS]
-    fresh = sum(1 for i in items if core.canon_url(i["u"]) in fresh_urls)
+    fresh = sum(1 for i in items if canon_url(i["u"]) in fresh_urls)
 
     languages = {}
     for loc in cfg.get("gnews", []):
