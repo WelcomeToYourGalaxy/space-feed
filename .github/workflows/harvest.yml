@@ -1,0 +1,61 @@
+name: Harvest wires
+
+on:
+  schedule:
+    - cron: "17 */2 * * *"     # every two hours, at :17
+  workflow_dispatch:            # run by hand from the Actions tab
+  push:
+    paths:
+      - "harvest.py"
+      - "harvest_space.py"
+      - "sources.json"
+      - "sources_space.json"
+      - ".github/workflows/harvest.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: harvest
+  cancel-in-progress: true      # a newer run supersedes one still in flight
+
+jobs:
+  harvest:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Astrobiology wire
+        run: python3 harvest.py
+
+      - name: Space-front wire
+        run: python3 harvest_space.py
+
+      - name: Commit whichever feeds changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add wire.json wire_space.json
+          if git diff --cached --quiet; then
+            echo "No change to either wire"
+            exit 0
+          fi
+          A=$(python3 -c "import json;print(json.load(open('wire.json'))['counts']['stories'])")
+          B=$(python3 -c "import json;print(json.load(open('wire_space.json'))['counts']['stories'])")
+          git commit -m "wires: $A astrobiology, $B space front ($(date -u '+%Y-%m-%d %H:%M UTC'))"
+          for attempt in 1 2 3 4 5; do
+            if git push; then
+              echo "Pushed on attempt $attempt"
+              exit 0
+            fi
+            echo "Push rejected — main moved. Rebasing and retrying (attempt $attempt)."
+            git pull --rebase --autostash origin "${GITHUB_REF_NAME}"
+            sleep $((attempt * 5))
+          done
+          echo "Could not push after five attempts."
+          exit 1
