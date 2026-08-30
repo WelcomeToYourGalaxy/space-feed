@@ -168,6 +168,7 @@ def parse_feed(raw, src):
             "d": stamp,
             "s": snippet,
             "w": src["name"],
+            "pn": None, "ll": None,
         })
     return out
 
@@ -440,6 +441,105 @@ def topics_for(text):
     return hits
 
 
+# ---------------------------------------------------------------- placement
+# Launch sites, spaceports, ground stations and the agencies that fly.
+# A story places only when one of these is named. Nothing is guessed from a
+# country: "a Chinese launch" is not a point, and inventing one would put a pin
+# somewhere nothing happened.
+SITES = {
+    'alcantara': ('Alcântara Launch Centre', -2.37, -44.4),
+    'alcântara': ('Alcântara Launch Centre', -2.37, -44.4),
+    'andoya': ('Andøya Spaceport', 69.29, 16.02),
+    'andøya': ('Andøya Spaceport', 69.29, 16.02),
+    'arnhem space centre': ('Arnhem Space Centre', -12.38, 136.82),
+    'baikonur': ('Baikonur Cosmodrome', 45.96, 63.31),
+    'bengaluru': ('ISRO, Bengaluru', 12.97, 77.59),
+    'boca chica': ('Starbase, Boca Chica', 25.997, -97.156),
+    'canaries': ('Canary Islands', 28.29, -16.62),
+    'canberra deep space': ('Canberra DSN, Tidbinbilla', -35.4, 148.98),
+    'cape canaveral': ('Cape Canaveral', 28.49, -80.57),
+    'cape york': ('Bowen, Queensland', -20.02, 148.24),
+    'el arenosillo': ('El Arenosillo, Huelva', 37.1, -6.74),
+    'esoc': ('ESOC, Darmstadt', 49.87, 8.62),
+    'esrange': ('Esrange, Kiruna', 67.89, 21.1),
+    'estec': ('ESTEC, Noordwijk', 52.22, 4.42),
+    'european space agency': ('ESA HQ, Paris', 48.85, 2.31),
+    'french guiana': ('Guiana Space Centre, Kourou', 5.24, -52.77),
+    'goddard space flight center': ('Goddard SFC', 38.99, -76.85),
+    'goheung': ('Naro Space Centre', 34.43, 127.54),
+    'goldstone': ('Goldstone DSN', 35.43, -116.89),
+    'guiana space centre': ('Guiana Space Centre, Kourou', 5.24, -52.77),
+    'hainan commercial': ('Hainan Commercial Spaceport', 19.63, 110.93),
+    'hawthorne': ('SpaceX, Hawthorne', 33.92, -118.33),
+    'jet propulsion laboratory': ('JPL, Pasadena', 34.2, -118.17),
+    'jiuquan': ('Jiuquan Launch Centre', 40.96, 100.29),
+    'johnson space center': ('Johnson Space Center', 29.56, -95.09),
+    'kapustin yar': ('Kapustin Yar', 48.58, 46.3),
+    'kennedy space center': ('Kennedy Space Center', 28.57, -80.65),
+    'kiruna': ('Kiruna', 67.86, 20.23),
+    'kodiak': ('Pacific Spaceport, Kodiak', 57.44, -152.34),
+    'koonibba': ('Koonibba Test Range', -31.88, 133.44),
+    'korolyov': ('Korolyov, Moscow', 55.92, 37.82),
+    'kourou': ('Guiana Space Centre, Kourou', 5.24, -52.77),
+    'lc-39a': ('Kennedy LC-39A', 28.61, -80.6),
+    'madrid deep space': ('Madrid DSN, Robledo', 40.43, -4.25),
+    'mahia': ('Rocket Lab, Māhia', -39.26, 177.86),
+    'malargue': ('Malargüe Station', -35.78, -69.4),
+    'malargüe': ('Malargüe Station', -35.78, -69.4),
+    'marshall space flight center': ('Marshall SFC', 34.65, -86.67),
+    'michoud': ('Michoud Assembly Facility', 29.99, -89.93),
+    'mojave air and space port': ('Mojave Air & Space Port', 35.06, -118.15),
+    'māhia': ('Rocket Lab, Māhia', -39.26, 177.86),
+    'naro': ('Naro Space Centre', 34.43, 127.54),
+    'new norcia': ('New Norcia Station', -31.05, 116.19),
+    'pad 39a': ('Kennedy LC-39A', 28.61, -80.6),
+    'palmachim': ('Palmachim Airbase', 31.9, 34.69),
+    'plesetsk': ('Plesetsk Cosmodrome', 62.93, 40.58),
+    'redmond': ('Starlink, Redmond', 47.67, -122.12),
+    'sagamihara': ('JAXA Sagamihara', 35.56, 139.38),
+    'satish dhawan': ('Satish Dhawan Centre, Sriharikota', 13.72, 80.23),
+    'saxavord': ('SaxaVord Spaceport, Unst', 60.82, -0.79),
+    'semnan': ('Imam Khomeini Spaceport, Semnan', 35.24, 53.95),
+    'sohae': ('Sohae Launching Station', 39.66, 124.71),
+    'spaceport america': ('Spaceport America', 32.99, -106.97),
+    'spaceport cornwall': ('Spaceport Cornwall', 50.44, -5.0),
+    'sriharikota': ('Satish Dhawan Centre, Sriharikota', 13.72, 80.23),
+    'star city': ('Star City, Moscow', 55.88, 38.12),
+    'starbase': ('Starbase, Boca Chica', 25.997, -97.156),
+    'stennis': ('Stennis Space Center', 30.36, -89.6),
+    'sutherland spaceport': ('Sutherland Spaceport', 58.51, -4.13),
+    'svalbard': ('Svalbard Satellite Station', 78.23, 15.39),
+    'taiyuan': ('Taiyuan Launch Centre', 38.85, 111.61),
+    'tanegashima': ('Tanegashima Space Centre', 30.4, 130.97),
+    'teruel': ('Teruel', 40.34, -1.11),
+    'thumba': ('Thumba, Thiruvananthapuram', 8.53, 76.87),
+    'tidbinbilla': ('Canberra DSN, Tidbinbilla', -35.4, 148.98),
+    'uchinoura': ('Uchinoura Space Centre', 31.25, 131.08),
+    'utah test and training range': ('Utah Test & Training Range', 40.55, -113.2),
+    'van horn': ('Corn Ranch, Van Horn', 31.42, -104.76),
+    'vandenberg': ('Vandenberg SFB', 34.74, -120.57),
+    'vostochny': ('Vostochny Cosmodrome', 51.88, 128.33),
+    'wallops': ('Wallops Flight Facility', 37.94, -75.47),
+    'wenchang': ('Wenchang Launch Site', 19.61, 110.95),
+    'woomera': ('Woomera Range', -30.96, 136.5),
+    'xichang': ('Xichang Launch Centre', 28.25, 102.03),
+}
+
+
+def site_for(text):
+    """(label, [lat, lon]) for the site named in the text, or (None, None).
+    Longest key first, so a specific pad beats the range it sits on."""
+    low = " " + re.sub(r"[^a-z0-9\u00c0-\u024f]+", " ", (text or "").lower()) + " "
+    for key in _SITE_KEYS:
+        if " " + key + " " in low:
+            label, lat, lon = SITES[key]
+            return label, [lat, lon]
+    return None, None
+
+
+_SITE_KEYS = sorted(SITES, key=len, reverse=True)
+
+
 def load_sources():
     with open(SOURCES_PATH, encoding="utf-8") as fh:
         cfg = json.load(fh)
@@ -506,6 +606,7 @@ def run(dry_run=False, fixtures=None):
                 if not relevant(text):
                     continue
                 row["x"] = topics_for(text) or ["industry"]
+                row["pn"], row["ll"] = site_for(text)
                 if src.get("kind") == "watchdog" and "accountability" not in row["x"]:
                     row["x"].append("accountability")
                 if absorb(row):
