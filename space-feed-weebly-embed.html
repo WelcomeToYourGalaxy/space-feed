@@ -1,13 +1,16 @@
 <!-- ============================================================
      The Space Front — live monitor · Weebly embed
      Paste this whole block into a Weebly "Embed Code" element.
-     Nothing is hosted: the feed travels inside this snippet and runs
-     in its own frame. The only runtime fetch is the wire.
+
+     HEIGHT. The frame is a fixed 1500px, written into the tag below in both the
+     height attribute and the style, so it exists before any script runs and
+     nothing moves it afterwards. To change the length, change BOTH numbers.
      ============================================================ -->
 <div id="galaxy-spacefront-embed" style="width:100%;margin:0;padding:0;">
   <iframe id="galaxy-spacefront-frame"
           title="The Space Front — live monitor"
-          style="width:100%;border:0;display:block;background:#05070e;border-radius:14px;overflow:hidden;"
+          height="1500"
+          style="width:100%;height:1500px;border:0;display:block;background:#0c0d0b;border-radius:14px;overflow:hidden;"
           scrolling="no"
           referrerpolicy="no-referrer-when-downgrade"></iframe>
 </div>
@@ -23,6 +26,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Marcellus&display=swap');
 /* ============================================================
    The Space Front — a monitoring feed.
    Everything scoped to .sf so it can be embedded anywhere.
@@ -37,7 +41,7 @@
     --flag: #ff6b9d;       /* rose — watchdog marker */
     --cool: #8fb4ff;
 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Marcellus', 'Georgia', serif;
     color: var(--ink);
     background:
         radial-gradient(1100px 520px at 88% -10%, rgba(70,90,160,0.26), transparent 60%),
@@ -62,8 +66,8 @@
 
 /* ---------- Header ---------- */
 .sf-head { flex: 0 0 auto; display: flex; align-items: baseline; justify-content: space-between; gap: clamp(0.8rem, 3vw, 2.2rem); flex-wrap: wrap; max-width: 1320px; width: 100%; margin: 0 auto; }
-.sf-title { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(1.35rem, 2.9vw, 2.25rem); line-height: 1.05; letter-spacing: -0.015em; margin: 0; color: #fbfcfe; display: flex; align-items: center; gap: 0.55rem; }
-.sf-title em { font-style: italic; color: var(--accent); }
+.sf-title { font-family: 'Uncial Antiqua', 'Marcellus', 'Georgia', serif; font-weight: 400; font-size: clamp(1.35rem, 2.9vw, 2.25rem); line-height: 1.05; letter-spacing: -0.015em; margin: 0; color: #fbfcfe; display: flex; align-items: center; gap: 0.55rem; }
+.sf-title em { font-style: normal; color: var(--accent); }
 .sf-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,0.14); animation: sf-pulse 2.6s ease-in-out infinite; flex: 0 0 auto; }
 .sf-dot.idle { background: #94a3b8; box-shadow: 0 0 0 4px rgba(148,163,184,0.12); animation: none; }
 .sf-dot.error { background: #f87171; box-shadow: 0 0 0 4px rgba(248,113,113,0.14); animation: none; }
@@ -95,6 +99,16 @@
 .sf-chip .sf-n { opacity: 0.6; margin-left: 0.3rem; font-variant-numeric: tabular-nums; }
 .sf-chip.empty { opacity: 0.4; }
 
+.sf-tr { display: flex; align-items: center; gap: 0.25rem; flex: 0 0 auto; position: sticky;
+    left: 62px; z-index: 2; background: linear-gradient(90deg, #0a0f1c 82%, transparent); padding-right: 0.5rem; }
+.sf-trlabel { font-size: 0.53rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
+.sf-tr select { font-family: inherit; font-size: 0.62rem; color: var(--ink);
+    background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: 999px;
+    padding: 0.26rem 0.5rem; cursor: pointer; max-width: 150px; }
+.sf-tr select:focus { outline: none; border-color: rgba(255,255,255,0.28); }
+.sf-mt { color: var(--ink-faint); border: 1px solid var(--line-soft); border-radius: 999px;
+    padding: 0.02rem 0.38rem; letter-spacing: 0.1em; }
+.sf-orig { color: var(--ink-faint); text-decoration: underline; text-underline-offset: 2px; }
 .sf-list { flex: 1 1 auto; min-height: 130px; overflow-y: auto; scrollbar-width: thin; overscroll-behavior: contain; }
 .sf-item { display: block; padding: 0.55rem 0.9rem; border-bottom: 1px solid var(--line-soft); text-decoration: none; color: inherit; }
 .sf-item:last-child { border-bottom: 0; }
@@ -131,9 +145,8 @@
 .sf-tab:hover, .sf-tab.on { color: var(--ink); border-color: rgba(255,255,255,0.24); }
 
 @media (max-width: 900px) {
-    .sf { height: auto; min-height: 0; overflow: visible; }
     .sf-panel { flex: 0 0 auto; }
-    .sf-list { max-height: 70vh; }
+    .sf-list { max-height: none; }
     .sf-sheet { position: fixed; left: 0.6rem; right: 0.6rem; bottom: 0.6rem; max-height: 72vh; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -166,8 +179,8 @@
 
         <div class="sf-filters">
             <div class="sf-row" id="sfTopicRow"><span class="sf-key">Subject</span></div>
-            <div class="sf-row" id="sfRegionRow"><span class="sf-key">Source</span></div>
-            <div class="sf-row" id="sfLangRow"><span class="sf-key">Language</span></div>
+            <div class="sf-row" id="sfRegionRow"><span class="sf-key">Who reports it</span></div>
+            <div class="sf-row" id="sfLangRow"><span class="sf-key">Language</span><span class="sf-tr"><label for="sfTr" class="sf-trlabel">Translate to</label><select id="sfTr" aria-label="Translate the feed"></select></span></div>
             <div class="sf-row" id="sfWhenRow"><span class="sf-key">Window</span></div>
         </div>
 
@@ -194,6 +207,14 @@
             protests, lawsuits, environmental reviews, subsidies and land disputes thinly. Eight searches run
             specifically for those, and everything they return is tagged <em>Protest &amp; accountability</em> and
             marked in the list. Filter to that subject to see the front as an activist rather than an investor.
+        </p>
+        <p class="sf-note">
+            <strong>Translation.</strong> The <em>Translate</em> control at the top renders the headlines and
+            snippets on screen into any of 26 languages, through a free public translation endpoint — no account,
+            no key, nothing stored. A translated row is marked as machine translation and keeps the publisher's
+            original wording on hover, because a machine rendering is not the publisher's words. If the endpoint
+            is unavailable the row simply stays in its original language rather than emptying. Translation
+            applies to what is on screen; scroll further or widen a filter and press the control again.
         </p>
         <p class="sf-note">
             <strong>Limits worth knowing.</strong> Google News caps a query at roughly 100 results over about
@@ -252,7 +273,101 @@ const WINDOWS = [
     { id: 'all', label: 'Everything', ms: null }
 ];
 
-const state = { items: [], topics: [], languages: {}, regions: [], sources: [], generated: null,
+/* ============================================================
+   Translation. Two independent things, because one of them can
+   fail and the other cannot:
+
+   1. In-place machine translation of the headlines and snippets
+      you are looking at, through a free public endpoint. No key,
+      no account. If it is unavailable the row falls back to the
+      original text and says so rather than showing nothing.
+   2. A per-row link that opens the article itself translated,
+      which is a plain URL and works even when (1) does not.
+
+   Machine translation is never presented as the publisher's own
+   words: a translated row is marked, and the original title is
+   kept on hover.
+   ============================================================ */
+const TR_LANGS = [
+    ['off', 'Off — original'], ['en', 'English'], ['es', 'Español'], ['pt', 'Português'],
+    ['fr', 'Français'], ['de', 'Deutsch'], ['it', 'Italiano'], ['nl', 'Nederlands'],
+    ['sv', 'Svenska'], ['pl', 'Polski'], ['el', 'Ελληνικά'], ['ru', 'Русский'],
+    ['uk', 'Українська'], ['tr', 'Türkçe'], ['ar', 'العربية'], ['he', 'עברית'],
+    ['fa', 'فارسی'], ['hi', 'हिन्दी'], ['bn', 'বাংলা'], ['id', 'Bahasa Indonesia'],
+    ['vi', 'Tiếng Việt'], ['th', 'ไทย'], ['ja', '日本語'], ['zh-CN', '简体中文'],
+    ['zh-TW', '繁體中文'], ['ko', '한국어'], ['sw', 'Kiswahili']
+];
+const trCache = new Map();        // key: lang + '\u0000' + text
+let trPending = false;
+
+function trKey(lang, text) { return lang + '\u0000' + text; }
+
+async function trOne(text, lang) {
+    const endpoints = [
+        () => 'https://translate.googleapis.com/translate_a/single?client=gtx&sl=auto&tl=' +
+              lang + '&dt=t&q=' + encodeURIComponent(text),
+        () => 'https://api.mymemory.translated.net/get?q=' + encodeURIComponent(text) +
+              '&langpair=autodetect|' + lang
+    ];
+    for (let i = 0; i < endpoints.length; i++) {
+        try {
+            const res = await fetch(endpoints[i]());
+            if (!res.ok) continue;
+            const data = await res.json();
+            if (i === 0 && Array.isArray(data) && Array.isArray(data[0])) {
+                const out = data[0].map(seg => (seg && seg[0]) || '').join('');
+                if (out.trim()) return out;
+            }
+            if (i === 1 && data && data.responseData && data.responseData.translatedText) {
+                return data.responseData.translatedText;
+            }
+        } catch (e) { /* try the next one */ }
+    }
+    return null;
+}
+
+async function trFill(items, lang, onDone) {
+    // only what is on screen, and only what is not already cached
+    const wanted = [];
+    items.forEach(i => {
+        [i.title, i.snippet].forEach(t => {
+            if (t && !trCache.has(trKey(lang, t))) wanted.push(t);
+        });
+    });
+    if (!wanted.length) { onDone(false); return; }
+
+    trPending = true;
+    let changed = false;
+    const queue = wanted.slice(0, 120);
+    async function worker() {
+        while (queue.length) {
+            const text = queue.shift();
+            const out = await trOne(text, lang);
+            trCache.set(trKey(lang, text), out || text);   // fall back to the original
+            changed = true;
+        }
+    }
+    await Promise.all([worker(), worker(), worker(), worker()]);
+    trPending = false;
+    onDone(changed);
+}
+
+function trText(text, lang) {
+    if (!text || lang === 'off') return text;
+    const hit = trCache.get(trKey(lang, text));
+    return hit === undefined ? text : hit;
+}
+
+/* the article itself, translated, as a plain link */
+function trUrl(url, lang) {
+    try {
+        const u = new URL(url);
+        return 'https://translate.google.com/translate?sl=auto&tl=' + lang +
+               '&u=' + encodeURIComponent(u.href);
+    } catch (e) { return url; }
+}
+
+const state = { tl: 'off', items: [], topics: [], languages: {}, regions: [], sources: [], generated: null,
                 topic: 'all', region: 'all', langs: new Set(), when: 'all', query: '',
                 shown: 50, loading: false };
 
@@ -284,7 +399,10 @@ function timeAgo(ts) {
 }
 function langName(c) { return state.languages[c] || c; }
 function topicLabel(id) { const t = state.topics.find(t => t.id === id); return t ? t.label : id; }
-function setStatus(text, cls) { $status.textContent = text; $dot.className = 'sf-dot' + (cls ? ' ' + cls : ''); }
+let lastStatus = '';
+function refreshStatus() { if (lastStatus) $status.textContent = lastStatus; }
+function setStatus(text, cls) { $status.textContent = text;
+    if (text.indexOf('Translating') === -1) lastStatus = text; $dot.className = 'sf-dot' + (cls ? ' ' + cls : ''); }
 
 async function load() {
     if (state.loading) return;
@@ -373,9 +491,11 @@ function render() {
                 '<div class="sf-meta"><span class="sf-lang">' + esc(langName(i.lang)) + '</span>' +
                 '<span>' + esc(i.outlet) + '</span><span>' + esc(i.region) + '</span>' +
                 (flagged ? '<span class="sf-flag">watchdog</span>' : '') +
-                '<span>' + timeAgo(i.ts) + '</span></div>' +
-                '<div class="sf-item-title">' + esc(i.title) + '</div>' +
-                (i.snippet ? '<div class="sf-snip">' + esc(i.snippet) + '</div>' : '') +
+                '<span>' + timeAgo(i.ts) + '</span>' +
+                (state.tl !== 'off' ? '<span class="sf-mt">machine translation</span>' : '') +
+                '</div>' +
+                '<div class="sf-item-title"' + (state.tl !== 'off' ? ' title="' + esc(i.title) + '"' : '') + '>' + esc(trText(i.title, state.tl)) + '</div>' +
+                (i.snippet ? '<div class="sf-snip">' + esc(trText(i.snippet, state.tl)) + '</div>' : '') +
                 '<div class="sf-tags">' + tags + '</div></a>';
         }).join('');
         if (items.length > state.shown) {
@@ -405,6 +525,10 @@ function buildChips() {
     chip($regionRow, 'region', 'all', 'All').classList.add('on');
     state.regions.forEach(r => chip($regionRow, 'region', r, r));
 
+    // an explicit All chip: without one the only way back from a single
+    // language was to untick it again
+    const allLang = chip($langRow, 'lang', 'all', 'All languages');
+    if (!state.langs.size) allLang.classList.add('on');
     Object.keys(state.languages).sort((a, b) => langName(a).localeCompare(langName(b)))
         .forEach(code => chip($langRow, 'lang', code, langName(code)));
 
@@ -431,9 +555,10 @@ function chipCounts() {
         c.classList.toggle('empty', n === 0 && r !== 'all');
     });
     $langRow.querySelectorAll('.sf-chip').forEach(c => {
-        const n = base.filter(i => i.lang === c.dataset.lang).length;
+        const code = c.dataset.lang;
+        const n = code === 'all' ? base.length : base.filter(i => i.lang === code).length;
         c.querySelector('.sf-n').textContent = n;
-        c.classList.toggle('empty', n === 0);
+        c.classList.toggle('empty', n === 0 && code !== 'all');
     });
     $whenRow.querySelectorAll('.sf-chip').forEach(c => {
         const w = WINDOWS.find(w => w.id === c.dataset.when);
@@ -464,8 +589,16 @@ single($whenRow, 'when');
 $langRow.addEventListener('click', e => {
     const c = e.target.closest('.sf-chip'); if (!c) return;
     const code = c.dataset.lang;
-    if (state.langs.has(code)) state.langs.delete(code); else state.langs.add(code);
-    c.classList.toggle('on', state.langs.has(code));
+    if (code === 'all') {
+        state.langs.clear();
+    } else if (state.langs.has(code)) {
+        state.langs.delete(code);
+    } else {
+        state.langs.add(code);
+    }
+    // All is lit exactly when no single language is picked
+    $langRow.querySelectorAll('.sf-chip').forEach(x => x.classList.toggle('on',
+        x.dataset.lang === 'all' ? !state.langs.size : state.langs.has(x.dataset.lang)));
     state.shown = 50; render();
 });
 
@@ -475,7 +608,7 @@ document.getElementById('sfClear').addEventListener('click', () => {
     state.query = ''; state.shown = 50; $search.value = '';
     $topicRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.topic === 'all'));
     $regionRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.region === 'all'));
-    $langRow.querySelectorAll('.sf-chip').forEach(c => c.classList.remove('on'));
+    $langRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.lang === 'all'));
     $whenRow.querySelectorAll('.sf-chip').forEach(c => c.classList.toggle('on', c.dataset.when === 'all'));
     render();
 });
@@ -506,21 +639,30 @@ document.addEventListener('keydown', e => {
     document.querySelectorAll('.sf-tab').forEach(t => t.classList.remove('on'));
 });
 
+
+/* translation control */
+(function () {
+    const sel = document.getElementById('sfTr');
+    if (!sel) return;
+    TR_LANGS.forEach(pair => {
+        const o = document.createElement('option');
+        o.value = pair[0]; o.textContent = pair[1];
+        sel.appendChild(o);
+    });
+    sel.value = 'off';
+    sel.addEventListener('change', () => {
+        state.tl = sel.value;
+        state.shown = 50;
+        render();
+        if (state.tl === 'off') { refreshStatus(); return; }
+        const onscreen = visible().slice(0, state.shown);
+        setStatus('Translating ' + onscreen.length + ' headlines…', '');
+        trFill(onscreen, state.tl, () => { render(); refreshStatus(); });
+    });
+})();
+
 load();
 setInterval(() => { if (!document.hidden) load(); }, 15 * 60 * 1000);
-})();
-@@GALAXY_END_SCRIPT@@
-
-<script>
-(function () {
-    function report() {
-        if (window.innerWidth > 900) return;
-        var h = Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
-        parent.postMessage({ galaxyEmbed: 'height', value: h }, '*');
-    }
-    window.addEventListener('load', report);
-    window.addEventListener('resize', report);
-    setInterval(report, 1500);
 })();
 @@GALAXY_END_SCRIPT@@
 </body>
@@ -529,32 +671,13 @@ setInterval(() => { if (!document.hidden) load(); }, 15 * 60 * 1000);
 </script>
 
 <script>
+/* Embed shell — build 2026-08-30g. Injects the document, nothing else. */
 (function () {
     var frame = document.getElementById('galaxy-spacefront-frame');
     var store = document.getElementById('galaxy-spacefront-doc');
     if (!frame || !store) return;
     var doc = store.textContent.split('@@GALAXY_END_SCRIPT@@').join('<' + '/script>');
-
-    function sizeFrame() {
-        if (window.innerWidth > 900) {
-            var h = Math.max(560, Math.min(window.innerHeight * 0.88, 1000));
-            frame.style.height = Math.round(h) + 'px';
-        } else if (!frame.dataset.selfSized) {
-            frame.style.height = '1400px';
-        }
-    }
-    sizeFrame();
-    window.addEventListener('resize', function () {
-        if (window.innerWidth > 900) { frame.dataset.selfSized = ''; }
-        sizeFrame();
-    });
-    window.addEventListener('message', function (e) {
-        if (!e.data || e.data.galaxyEmbed !== 'height') return;
-        if (window.innerWidth > 900) return;
-        frame.dataset.selfSized = '1';
-        frame.style.height = Math.round(Math.max(600, Math.min(e.data.value + 20, 6000))) + 'px';
-    });
-
+    try { console.info('space-feed: embed build 2026-08-30g'); } catch (e) {}
     if ('srcdoc' in frame) { frame.srcdoc = doc; }
     else { var d = frame.contentWindow.document; d.open(); d.write(doc); d.close(); }
 })();

@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Uncial+Antiqua&family=Marcellus&display=swap');
 /* ============================================================
    The Space Front — a monitoring feed.
    Everything scoped to .sf so it can be embedded anywhere.
@@ -22,7 +23,7 @@
     --flag: #ff6b9d;       /* rose — watchdog marker */
     --cool: #8fb4ff;
 
-    font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-family: 'Marcellus', 'Georgia', serif;
     color: var(--ink);
     background:
         radial-gradient(1100px 520px at 88% -10%, rgba(70,90,160,0.26), transparent 60%),
@@ -47,8 +48,8 @@
 
 /* ---------- Header ---------- */
 .sf-head { flex: 0 0 auto; display: flex; align-items: baseline; justify-content: space-between; gap: clamp(0.8rem, 3vw, 2.2rem); flex-wrap: wrap; max-width: 1320px; width: 100%; margin: 0 auto; }
-.sf-title { font-family: 'Instrument Serif', Georgia, serif; font-weight: 400; font-size: clamp(1.35rem, 2.9vw, 2.25rem); line-height: 1.05; letter-spacing: -0.015em; margin: 0; color: #fbfcfe; display: flex; align-items: center; gap: 0.55rem; }
-.sf-title em { font-style: italic; color: var(--accent); }
+.sf-title { font-family: 'Uncial Antiqua', 'Marcellus', 'Georgia', serif; font-weight: 400; font-size: clamp(1.35rem, 2.9vw, 2.25rem); line-height: 1.05; letter-spacing: -0.015em; margin: 0; color: #fbfcfe; display: flex; align-items: center; gap: 0.55rem; }
+.sf-title em { font-style: normal; color: var(--accent); }
 .sf-dot { width: 8px; height: 8px; border-radius: 50%; background: #4ade80; box-shadow: 0 0 0 4px rgba(74,222,128,0.14); animation: sf-pulse 2.6s ease-in-out infinite; flex: 0 0 auto; }
 .sf-dot.idle { background: #94a3b8; box-shadow: 0 0 0 4px rgba(148,163,184,0.12); animation: none; }
 .sf-dot.error { background: #f87171; box-shadow: 0 0 0 4px rgba(248,113,113,0.14); animation: none; }
@@ -80,7 +81,9 @@
 .sf-chip .sf-n { opacity: 0.6; margin-left: 0.3rem; font-variant-numeric: tabular-nums; }
 .sf-chip.empty { opacity: 0.4; }
 
-.sf-tr { display: flex; align-items: center; gap: 0.3rem; flex: 0 0 auto; }
+.sf-tr { display: flex; align-items: center; gap: 0.25rem; flex: 0 0 auto; position: sticky;
+    left: 62px; z-index: 2; background: linear-gradient(90deg, #0a0f1c 82%, transparent); padding-right: 0.5rem; }
+.sf-trlabel { font-size: 0.53rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-faint); }
 .sf-tr select { font-family: inherit; font-size: 0.62rem; color: var(--ink);
     background: rgba(255,255,255,0.05); border: 1px solid var(--line); border-radius: 999px;
     padding: 0.26rem 0.5rem; cursor: pointer; max-width: 150px; }
@@ -124,9 +127,8 @@
 .sf-tab:hover, .sf-tab.on { color: var(--ink); border-color: rgba(255,255,255,0.24); }
 
 @media (max-width: 900px) {
-    .sf { height: auto; min-height: 0; overflow: visible; }
     .sf-panel { flex: 0 0 auto; }
-    .sf-list { max-height: 70vh; }
+    .sf-list { max-height: none; }
     .sf-sheet { position: fixed; left: 0.6rem; right: 0.6rem; bottom: 0.6rem; max-height: 72vh; }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -152,7 +154,6 @@
             <div class="sf-tools">
                 <input class="sf-search" id="sfSearch" type="search" placeholder="Starlink, spaceport, ASAT, subsidy…" aria-label="Filter headlines">
                 <button class="sf-btn" id="sfClear">Clear</button>
-                <span class="sf-tr"><label for="sfTr" class="sf-key" style="min-width:0">Translate</label><select id="sfTr" aria-label="Translate the feed"></select></span>
                 <button class="sf-btn" id="sfRefresh">Refresh</button>
             </div>
         </div>
@@ -160,8 +161,8 @@
 
         <div class="sf-filters">
             <div class="sf-row" id="sfTopicRow"><span class="sf-key">Subject</span></div>
-            <div class="sf-row" id="sfRegionRow"><span class="sf-key">Source</span></div>
-            <div class="sf-row" id="sfLangRow"><span class="sf-key">Language</span></div>
+            <div class="sf-row" id="sfRegionRow"><span class="sf-key">Who reports it</span></div>
+            <div class="sf-row" id="sfLangRow"><span class="sf-key">Language</span><span class="sf-tr"><label for="sfTr" class="sf-trlabel">Translate to</label><select id="sfTr" aria-label="Translate the feed"></select></span></div>
             <div class="sf-row" id="sfWhenRow"><span class="sf-key">Window</span></div>
         </div>
 
