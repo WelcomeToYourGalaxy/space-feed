@@ -29,6 +29,20 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import datetime, timezone
 from email.utils import parsedate_to_datetime
 
+# The shared gazetteer. Placement used to be each wire's own short country
+# table, which put most of every wire in a counter marked "unplaced"; this is
+# the fleet's common one, and it is optional at import so a harvest still runs
+# if the data file has not been fetched yet.
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+try:
+    import galaxy_places
+    _GAZETTEER = True
+except Exception as _exc:                       # noqa: BLE001
+    print("  ! gazetteer unavailable (%s); falling back to the local table"
+          % _exc, file=sys.stderr)
+    galaxy_places = None
+    _GAZETTEER = False
+
 HERE = os.path.dirname(os.path.abspath(__file__))
 SOURCES_PATH = os.path.join(HERE, "sources_space.json")
 OUT_PATH = os.path.join(HERE, "wire_space.json")
@@ -60,9 +74,24 @@ def build_gnews_url(loc):
     return ("https://news.google.com/rss/search?q=" + urllib.parse.quote(q) +
             "&hl=" + loc["hl"] + "&gl=" + loc["gl"] + "&ceid=" + loc["ceid"])
 
+READ_BUDGET_MIN = 35          # minutes spent reading wires
+
+# The wall-clock budget for reading wires. Past it the remaining sources are
+# recorded unreachable and the harvest finishes on what it has, because the
+# wire is only written at the end of run() and a job killed by the workflow
+# timeout commits nothing at all — which is how a feed gets stuck stale.
+DEADLINE = None
+
+
+def out_of_time():
+    return DEADLINE is not None and time.monotonic() > DEADLINE
+
+
 def fetch(url, tries=3):
     last = None
     for attempt in range(tries):
+        if out_of_time():
+            return None
         try:
             req = urllib.request.Request(url, headers={
                 "User-Agent": USER_AGENT,
@@ -75,6 +104,16 @@ def fetch(url, tries=3):
                 if resp.headers.get("Content-Encoding") == "gzip":
                     raw = gzip.GzipFile(fileobj=io.BytesIO(raw)).read()
                 return raw
+        except urllib.error.HTTPError as exc:
+            last = exc
+            # Being rate-limited or refused is an answer, not a hiccup. Trying
+            # the same query twice more against the same limiter spends eighty
+            # seconds of a worker slot to be told the same thing, and deepens
+            # the throttle for every other query in the run.
+            if exc.code in (403, 429, 451):
+                time.sleep(1.5)
+                break
+            time.sleep(1.5 * (attempt + 1))
         except Exception as exc:                       # noqa: BLE001 — report, don't crash the run
             last = exc
             time.sleep(1.5 * (attempt + 1))
@@ -401,6 +440,12 @@ AMBIGUOUS = [
 ]
 
 BLOCK = [
+    # recruitment and personnel notices at the agencies this wire follows, and
+    # a hotel group whose ticker reads ISRO
+    "recruitment", "vacancies", "apply for", "eligibility", "hiring for",
+    "admit card", "exam date", "notification released", "isrotel",
+    "tase:isro", "earnings", "looks pricey", "quarterly results",
+    "action camera", "osmo action", "camera captures",
     # the word "space" in its earthly senses, and the entertainment industry
     "office space", "parking space", "storage space", "coworking", "retail space",
     "space heater", "space bar", "headspace", "safe space", "green space", "crawl space",
@@ -415,6 +460,79 @@ BLOCK = [
 ANCHOR_C = _compile_all(ANCHOR)
 AMBIGUOUS_C = _compile_all(AMBIGUOUS)
 BLOCK_C = _compile_all(BLOCK)
+# --------------------------------------------------------------------------
+# The subjects, in the languages this wire already reads.
+#
+# The default was filing 312 of 1200 under "industry", and most of them were
+# ordinary launch and industry news in Polish, Italian, Korean, Vietnamese,
+# Chinese, Hindi and Bengali. Policy in particular had four stories, because
+# agency budgets, national space academies and the argument over handing
+# strategic capability to private firms were all landing in the default.
+# --------------------------------------------------------------------------
+LOCAL_TERMS = {
+    "launch": [
+        ("lanciato", ["satellite", "razzo"]), ("lanzado", ["satélite", "cohete"]),
+        ("lançado", ["satélite", "foguete"]), ("발사", ["성공", "위성", "로켓"]),
+        ("打上げ", None), ("発射", ["ロケット", "衛星"]), ("发射", ["卫星", "火箭", "成功"]),
+        ("發射", ["衛星", "火箭"]), ("phóng", ["vệ tinh", "tên lửa"]),
+        ("wystrzelono", None), ("запуск", ["спутник", "ракет"]),
+        ("uzaya fırlat", None), ("प्रक्षेपण", None), ("উৎক্ষেপণ", None),
+        ("orbital launch", None), ("first stage recovery", None), ("一子級", None),
+        ("回收", ["火箭", "一子級", "成功"]),
+    ],
+    "industry": [
+        ("spaceport", None), ("port kosmiczny", None), ("puerto espacial", None),
+        ("porto spaziale", None), ("宇宙港", None), ("우주항", None),
+        ("satellite export*", None), ("xuất khẩu vệ tinh", None), ("卫星出口", None),
+        ("rocket technolog*", None), ("commercial space", None), ("商業航天", None),
+        ("商业航天", None), ("民間企業", ["宇宙", "衛星"]), ("tư nhân", ["vũ trụ", "vệ tinh"]),
+        ("private sector", ["space", "isro", "launch"]), ("निजी क्षेत्र", ["अंतरिक्ष"]),
+        ("industry interest", ["rocket", "launch", "space"]), ("eye rocket", None),
+        ("tender", ["rocket", "launch", "satellite", "space"]),
+    ],
+    "policy": [
+        ("space agency funding", None), ("agency funding", ["space"]),
+        ("space academy", None), ("national space policy", None), ("space bill", None),
+        ("अंतरिक्ष क्षमता", None), ("strategic space", None),
+        ("handing", ["private sector", "strategic"]), ("privatis*", ["space", "isro", "launch"]),
+        ("privatiz*", ["space", "isro", "launch"]),
+        ("política espacial", None), ("politique spatiale", None), ("宇宙政策", None),
+        ("우주 정책", None), ("космическая политика", None), ("kebijakan antariksa", None),
+        ("space agency", ["launches guide", "budget", "funding", "created", "forms"]),
+    ],
+    "exploration": [
+        ("telescope", ["launch", "success", "first light", "wider", "roman"]),
+        ("망원경", None), ("望遠鏡", None), ("télescope", None), ("telescopio", None),
+        ("astronomical events", None), ("lunarecycle", None), ("lunar challenge", None),
+        ("weather satellite", None), ("satellite meteorologico", None), ("気象衛星", None),
+    ],
+    "environment": [
+        ("wetland*", ["spaceport", "launch site", "convert"]), ("humedal", None),
+        ("launch site", ["environment*", "habitat", "wetland", "protest"]),
+        ("environmental review", ["launch", "spaceport", "starbase"]),
+    ],
+}
+
+for _tid, _label, _terms in TOPICS:
+    _terms.extend(LOCAL_TERMS.get(_tid, []))
+
+
+# --------------------------------------------------------------------------
+# The same subjects in the languages this wire's own queries ask in, derived
+# from those queries and filed under the subject each query's label names. The
+# gate above was written in English; the queries were translated and it was
+# not, so three quarters of what the wire fetched could not be recognised once
+# it arrived. Generated — edit topics_multilingual.json, or delete the file to
+# turn this off.
+# --------------------------------------------------------------------------
+_EXTRA_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                           "topics_multilingual.json")
+if os.path.exists(_EXTRA_PATH):
+    with open(_EXTRA_PATH, encoding="utf-8") as _fh:
+        _EXTRA = json.load(_fh)
+    TOPICS = [(tid, label, terms + [(t, g) for t, g in _EXTRA.get(tid, [])])
+              for tid, label, terms in TOPICS]
+
 TOPICS_C = [(tid, label, [(_compile(t), _compile_all(g) if g else None) for t, g in terms])
             for tid, label, terms in TOPICS]
 
@@ -536,6 +654,28 @@ def site_for(text):
             return label, [lat, lon]
     return None, None
 
+def place_for(text, locale=None, raw=None):
+    """Where a story is, launch sites first.
+
+    This wire's own site table is the specific answer — Baikonur, Wenchang,
+    Boca Chica — so it leads. Below it the shared gazetteer reads any other
+    place the story names, and below that the country the source reports from,
+    which is marked approximate and drawn hollow on the page.
+    """
+    label, point = site_for(text)
+    if point:
+        return label, point, False
+    if _GAZETTEER:
+        glabel, gpoint, _rank, _approx = galaxy_places.resolve_ranked(raw or text)
+        if gpoint:
+            return glabel, gpoint, False
+        if locale:
+            llabel, lpoint, _lr, lapprox = galaxy_places.resolve_ranked("", locale)
+            if lpoint:
+                return llabel, lpoint, lapprox
+    return None, None, False
+
+
 
 _SITE_KEYS = sorted(SITES, key=len, reverse=True)
 
@@ -552,13 +692,16 @@ def load_sources():
             srcs.append({
                 "name": ("Google News · " if block == "gnews" else "Watchdog · ") + loc["label"],
                 "lang": loc["lang"], "region": loc["region"], "kind": kind,
-                "url": build_gnews_url(loc),
+                "url": build_gnews_url(loc), "gl": loc.get("gl"),
             })
     return srcs, cfg
 
 
 def run(dry_run=False, fixtures=None):
+    global DEADLINE
     sources, cfg = load_sources()
+    if not fixtures:
+        DEADLINE = time.monotonic() + READ_BUDGET_MIN * 60
     print("Reading %d wires…" % len(sources))
 
     def read(src):
@@ -595,9 +738,10 @@ def run(dry_run=False, fixtures=None):
         items.append(row)
         return True
 
-    stats, ok_count = [], 0
+    stats, ok_count, refused = [], 0, 0
     for src, raw in results:
-        stat = {"name": src["name"], "lang": src["lang"], "region": src["region"], "kept": 0, "ok": False}
+        stat = {"name": src["name"], "lang": src["lang"], "region": src["region"],
+                "kept": 0, "refused": 0, "ok": False}
         if raw:
             stat["ok"] = True
             ok_count += 1
@@ -605,8 +749,17 @@ def run(dry_run=False, fixtures=None):
                 text = (row["t"] + " " + row["s"]).lower()
                 if not relevant(text):
                     continue
-                row["x"] = topics_for(text) or ["industry"]
-                row["pn"], row["ll"] = site_for(text)
+                # No silent default. This read `or ["industry"]`, which filed
+                # 312 of 1200 stories under a subject none had matched.
+                subjects = topics_for(text)
+                if not subjects:
+                    stat["refused"] += 1
+                    refused += 1
+                    continue
+                row["x"] = subjects
+                row["gl"] = src.get("gl")
+                row["pn"], row["ll"], row["pa"] = place_for(
+                    text, src.get("gl"), (row["t"] or "") + " " + (row.get("s") or ""))
                 if src.get("kind") == "watchdog" and "accountability" not in row["x"]:
                     row["x"].append("accountability")
                 if absorb(row):
@@ -616,8 +769,20 @@ def run(dry_run=False, fixtures=None):
 
     fresh_urls = {canon_url(i["u"]) for i in items}
     for row in previous:
-        if "x" in row:
-            absorb(row)
+        if "x" not in row:
+            continue
+        # A retained story is placed again rather than carried forward with the
+        # answer it happened to get the day it was first read. RETAIN_DAYS is
+        # 45, so without this a change to the placement layer takes a month and
+        # a half to reach the map, and a story never re-fetched keeps its first
+        # answer for good. Rows already holding a point resolved from their own
+        # text are left alone; only the unplaced and the source-country
+        # approximations are reconsidered.
+        if not row.get("ll") or row.get("pa"):
+            _raw = ((row.get("t") or "") + " " + (row.get("s") or ""))
+            row["pn"], row["ll"], row["pa"] = place_for(
+                _raw.lower(), row.get("gl"), _raw)
+        absorb(row)
 
     cutoff = int(time.time() * 1000) - RETAIN_DAYS * 86400000
     items = [i for i in items if (i.get("d") or cutoff + 1) >= cutoff]
@@ -637,7 +802,7 @@ def run(dry_run=False, fixtures=None):
 
     payload = {
         "generated": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "counts": {"stories": len(items), "new_this_run": fresh,
+        "counts": {"stories": len(items), "new_this_run": fresh, "refused": refused,
                    "languages": len({i["g"] for i in items}),
                    "wires_ok": ok_count, "wires_total": len(sources)},
         "languages": languages,

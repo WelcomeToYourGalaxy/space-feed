@@ -1,1464 +1,2922 @@
 {
-  "_note": "Wires for the space-front feed. harvest_space.py reads this and writes wire_space.json. 'query' is used only by the gnews block and is written in the language of that locale. The 'watchdog' block is English-language accountability searches — protest, lawsuit, land, pollution, militarisation — that the general desks under-report. Locale coverage is expanded: several country editions per language, and each query split into slices so no single search hits Google News's ~100-result cap.",
-  "direct": [
-    {
-      "name": "SpaceNews",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://spacenews.com/feed/"
-    },
-    {
-      "name": "NASASpaceflight",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://www.nasaspaceflight.com/feed/"
-    },
-    {
-      "name": "Spaceflight Now",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://spaceflightnow.com/feed/"
-    },
-    {
-      "name": "European Spaceflight",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://europeanspaceflight.com/feed/"
-    },
-    {
-      "name": "Orbital Today",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://orbitaltoday.com/feed/"
-    },
-    {
-      "name": "Via Satellite",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://www.satellitetoday.com/feed/"
-    },
-    {
-      "name": "The Space Review",
-      "lang": "en",
-      "region": "Trade press",
-      "url": "https://www.thespacereview.com/articles.xml"
-    },
-    {
-      "name": "Space Policy Online",
-      "lang": "en",
-      "region": "Policy",
-      "url": "https://spacepolicyonline.com/feed/"
-    },
-    {
-      "name": "Ars Technica — Space",
-      "lang": "en",
-      "region": "Science desk",
-      "url": "https://feeds.arstechnica.com/arstechnica/space"
-    },
-    {
-      "name": "Space.com",
-      "lang": "en",
-      "region": "Science desk",
-      "url": "https://www.space.com/feeds/all"
-    },
-    {
-      "name": "SpaceDaily",
-      "lang": "en",
-      "region": "Science desk",
-      "url": "https://www.spacedaily.com/spacedaily.xml"
-    },
-    {
-      "name": "Phys.org — Space",
-      "lang": "en",
-      "region": "Science desk",
-      "url": "https://phys.org/rss-feed/space-news/"
-    },
-    {
-      "name": "Universe Today",
-      "lang": "en",
-      "region": "Science desk",
-      "url": "https://www.universetoday.com/feed"
-    },
-    {
-      "name": "NASA",
-      "lang": "en",
-      "region": "Institutional",
-      "url": "https://www.nasa.gov/feed/"
-    },
-    {
-      "name": "NASA JPL",
-      "lang": "en",
-      "region": "Institutional",
-      "url": "https://www.jpl.nasa.gov/feeds/news/"
-    },
-    {
-      "name": "ESA — Space Transportation",
-      "lang": "en",
-      "region": "Institutional",
-      "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Transportation"
-    },
-    {
-      "name": "ESA — Observing the Earth",
-      "lang": "en",
-      "region": "Institutional",
-      "url": "https://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth"
-    },
-    {
-      "name": "Planetary Society",
-      "lang": "en",
-      "region": "Institutional",
-      "url": "https://www.planetary.org/rss/articles"
-    },
-    {
-      "name": "DLR (DE)",
-      "lang": "de",
-      "region": "Institutional",
-      "url": "https://www.dlr.de/de/aktuelles/nachrichten/rss"
-    }
-  ],
-  "gnews": [
-    {
-      "label": "English (US) 1",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space industry\" OR \"rocket launch\" OR spaceport"
-    },
-    {
-      "label": "English (US) 2",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"satellite constellation\" OR \"space force\" OR \"launch licence\""
-    },
-    {
-      "label": "English (US) 3",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"orbital debris\""
-    },
-    {
-      "label": "English (GB) 1",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space industry\" OR \"rocket launch\" OR spaceport"
-    },
-    {
-      "label": "English (GB) 2",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"satellite constellation\" OR \"space force\" OR \"launch licence\""
-    },
-    {
-      "label": "English (GB) 3",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"orbital debris\""
-    },
-    {
-      "label": "English (IN) 1",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"space industry\" OR \"rocket launch\" OR spaceport"
-    },
-    {
-      "label": "English (IN) 2",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"satellite constellation\" OR \"space force\" OR \"launch licence\""
-    },
-    {
-      "label": "English (IN) 3",
-      "lang": "en",
-      "region": "North America",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"orbital debris\""
-    },
-    {
-      "label": "English (UK) (US) 1",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space industry\""
-    },
-    {
-      "label": "English (UK) (US) 2",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"satellite constellation\" OR \"space regulator\" OR SaxaVord"
-    },
-    {
-      "label": "English (UK) (GB) 1",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space industry\""
-    },
-    {
-      "label": "English (UK) (GB) 2",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"satellite constellation\" OR \"space regulator\" OR SaxaVord"
-    },
-    {
-      "label": "English (UK) (IN) 1",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space industry\""
-    },
-    {
-      "label": "English (UK) (IN) 2",
-      "lang": "en",
-      "region": "Western Europe",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"satellite constellation\" OR \"space regulator\" OR SaxaVord"
-    },
-    {
-      "label": "English (India) (US) 1",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "ISRO OR Sriharikota OR \"space industry\""
-    },
-    {
-      "label": "English (India) (US) 2",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"satellite launch\" OR \"space policy\" OR Gaganyaan"
-    },
-    {
-      "label": "English (India) (GB) 1",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "ISRO OR Sriharikota OR \"space industry\""
-    },
-    {
-      "label": "English (India) (GB) 2",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"satellite launch\" OR \"space policy\" OR Gaganyaan"
-    },
-    {
-      "label": "English (India) (IN) 1",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "ISRO OR Sriharikota OR \"space industry\""
-    },
-    {
-      "label": "English (India) (IN) 2",
-      "lang": "en",
-      "region": "South Asia",
-      "hl": "en-IN",
-      "gl": "IN",
-      "ceid": "IN:en",
-      "query": "\"satellite launch\" OR \"space policy\" OR Gaganyaan"
-    },
-    {
-      "label": "English (Aus) (AU) 1",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space agency\""
-    },
-    {
-      "label": "English (Aus) (AU) 2",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-AU",
-      "gl": "AU",
-      "ceid": "AU:en",
-      "query": "\"satellite constellation\" OR \"launch site\""
-    },
-    {
-      "label": "English (Aus) (US) 1",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space agency\""
-    },
-    {
-      "label": "English (Aus) (US) 2",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"satellite constellation\" OR \"launch site\""
-    },
-    {
-      "label": "English (Aus) (GB) 1",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "spaceport OR \"rocket launch\" OR \"space agency\""
-    },
-    {
-      "label": "English (Aus) (GB) 2",
-      "lang": "en",
-      "region": "Oceania",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"satellite constellation\" OR \"launch site\""
-    },
-    {
-      "label": "English (S. Africa) (ZA) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-ZA",
-      "gl": "ZA",
-      "ceid": "ZA:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR spaceport"
-    },
-    {
-      "label": "English (S. Africa) (ZA) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-ZA",
-      "gl": "ZA",
-      "ceid": "ZA:en",
-      "query": "\"space industry\" OR \"ground station\""
-    },
-    {
-      "label": "English (S. Africa) (US) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR spaceport"
-    },
-    {
-      "label": "English (S. Africa) (US) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space industry\" OR \"ground station\""
-    },
-    {
-      "label": "English (S. Africa) (GB) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR spaceport"
-    },
-    {
-      "label": "English (S. Africa) (GB) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space industry\" OR \"ground station\""
-    },
-    {
-      "label": "English (Nigeria) (NG) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-NG",
-      "gl": "NG",
-      "ceid": "NG:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"space programme\""
-    },
-    {
-      "label": "English (Nigeria) (NG) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-NG",
-      "gl": "NG",
-      "ceid": "NG:en",
-      "query": "\"ground station\" OR NASRDA"
-    },
-    {
-      "label": "English (Nigeria) (US) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"space programme\""
-    },
-    {
-      "label": "English (Nigeria) (US) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"ground station\" OR NASRDA"
-    },
-    {
-      "label": "English (Nigeria) (GB) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"space programme\""
-    },
-    {
-      "label": "English (Nigeria) (GB) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"ground station\" OR NASRDA"
-    },
-    {
-      "label": "English (Kenya) (KE) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-KE",
-      "gl": "KE",
-      "ceid": "KE:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"ground station\""
-    },
-    {
-      "label": "English (Kenya) (KE) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-KE",
-      "gl": "KE",
-      "ceid": "KE:en",
-      "query": "\"space programme\" OR Broglio"
-    },
-    {
-      "label": "English (Kenya) (US) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"ground station\""
-    },
-    {
-      "label": "English (Kenya) (US) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space programme\" OR Broglio"
-    },
-    {
-      "label": "English (Kenya) (GB) 1",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space agency\" OR \"satellite launch\" OR \"ground station\""
-    },
-    {
-      "label": "English (Kenya) (GB) 2",
-      "lang": "en",
-      "region": "Sub-Saharan Africa",
-      "hl": "en-GB",
-      "gl": "GB",
-      "ceid": "GB:en",
-      "query": "\"space programme\" OR Broglio"
-    },
-    {
-      "label": "Español (ES) 1",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "\"industria espacial\" OR \"lanzamiento de cohete\" OR puerto espacial"
-    },
-    {
-      "label": "Español (ES) 2",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "\"constelación de satélites\" OR PLD Space"
-    },
-    {
-      "label": "Español (MX) 1",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "\"industria espacial\" OR \"lanzamiento de cohete\" OR puerto espacial"
-    },
-    {
-      "label": "Español (MX) 2",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "\"constelación de satélites\" OR PLD Space"
-    },
-    {
-      "label": "Español (AR) 1",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "\"industria espacial\" OR \"lanzamiento de cohete\" OR puerto espacial"
-    },
-    {
-      "label": "Español (AR) 2",
-      "lang": "es",
-      "region": "Western Europe",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "\"constelación de satélites\" OR PLD Space"
-    },
-    {
-      "label": "Español (MX) (ES) 1",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "\"industria espacial\" OR \"lanzamiento espacial\" OR \"agencia espacial\""
-    },
-    {
-      "label": "Español (MX) (ES) 2",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es",
-      "gl": "ES",
-      "ceid": "ES:es",
-      "query": "satélite lanzamiento OR \"basura espacial\""
-    },
-    {
-      "label": "Español (MX) (MX) 1",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "\"industria espacial\" OR \"lanzamiento espacial\" OR \"agencia espacial\""
-    },
-    {
-      "label": "Español (MX) (MX) 2",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "satélite lanzamiento OR \"basura espacial\""
-    },
-    {
-      "label": "Español (MX) (AR) 1",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "\"industria espacial\" OR \"lanzamiento espacial\" OR \"agencia espacial\""
-    },
-    {
-      "label": "Español (MX) (AR) 2",
-      "lang": "es",
-      "region": "Latin America",
-      "hl": "es-419",
-      "gl": "AR",
-      "ceid": "AR:es-419",
-      "query": "satélite lanzamiento OR \"basura espacial\""
-    },
-    {
-      "label": "Português (BR) 1",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "BR",
-      "ceid": "BR:pt-419",
-      "query": "\"indústria espacial\" OR Alcântara base OR \"lançamento de foguete\""
-    },
-    {
-      "label": "Português (BR) 2",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "BR",
-      "ceid": "BR:pt-419",
-      "query": "\"agência espacial\" OR \"lixo espacial\""
-    },
-    {
-      "label": "Português (PT) 1",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "PT",
-      "ceid": "PT:pt-150",
-      "query": "\"indústria espacial\" OR Alcântara base OR \"lançamento de foguete\""
-    },
-    {
-      "label": "Português (PT) 2",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "PT",
-      "ceid": "PT:pt-150",
-      "query": "\"agência espacial\" OR \"lixo espacial\""
-    },
-    {
-      "label": "Português (AO) 1",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "AO",
-      "ceid": "AO:pt-150",
-      "query": "\"indústria espacial\" OR Alcântara base OR \"lançamento de foguete\""
-    },
-    {
-      "label": "Português (AO) 2",
-      "lang": "pt",
-      "region": "Latin America",
-      "hl": "pt-BR",
-      "gl": "AO",
-      "ceid": "AO:pt-150",
-      "query": "\"agência espacial\" OR \"lixo espacial\""
-    },
-    {
-      "label": "Français (FR) 1",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "FR",
-      "ceid": "FR:fr",
-      "query": "\"industrie spatiale\" OR \"lancement de fusée\" OR Kourou"
-    },
-    {
-      "label": "Français (FR) 2",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "FR",
-      "ceid": "FR:fr",
-      "query": "Ariane OR \"débris spatiaux\" OR \"base spatiale\""
-    },
-    {
-      "label": "Français (BE) 1",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "BE",
-      "ceid": "BE:fr",
-      "query": "\"industrie spatiale\" OR \"lancement de fusée\" OR Kourou"
-    },
-    {
-      "label": "Français (BE) 2",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "BE",
-      "ceid": "BE:fr",
-      "query": "Ariane OR \"débris spatiaux\" OR \"base spatiale\""
-    },
-    {
-      "label": "Français (CA) 1",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "CA",
-      "ceid": "CA:fr",
-      "query": "\"industrie spatiale\" OR \"lancement de fusée\" OR Kourou"
-    },
-    {
-      "label": "Français (CA) 2",
-      "lang": "fr",
-      "region": "Western Europe",
-      "hl": "fr",
-      "gl": "CA",
-      "ceid": "CA:fr",
-      "query": "Ariane OR \"débris spatiaux\" OR \"base spatiale\""
-    },
-    {
-      "label": "Deutsch (DE) 1",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "DE",
-      "ceid": "DE:de",
-      "query": "Raumfahrtindustrie OR Raketenstart OR Weltraumbahnhof"
-    },
-    {
-      "label": "Deutsch (DE) 2",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "DE",
-      "ceid": "DE:de",
-      "query": "Satellitenkonstellation OR Weltraumschrott"
-    },
-    {
-      "label": "Deutsch (AT) 1",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "AT",
-      "ceid": "AT:de",
-      "query": "Raumfahrtindustrie OR Raketenstart OR Weltraumbahnhof"
-    },
-    {
-      "label": "Deutsch (AT) 2",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "AT",
-      "ceid": "AT:de",
-      "query": "Satellitenkonstellation OR Weltraumschrott"
-    },
-    {
-      "label": "Deutsch (CH) 1",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "CH",
-      "ceid": "CH:de",
-      "query": "Raumfahrtindustrie OR Raketenstart OR Weltraumbahnhof"
-    },
-    {
-      "label": "Deutsch (CH) 2",
-      "lang": "de",
-      "region": "Western Europe",
-      "hl": "de",
-      "gl": "CH",
-      "ceid": "CH:de",
-      "query": "Satellitenkonstellation OR Weltraumschrott"
-    },
-    {
-      "label": "Italiano (IT) 1",
-      "lang": "it",
-      "region": "Western Europe",
-      "hl": "it",
-      "gl": "IT",
-      "ceid": "IT:it",
-      "query": "\"industria spaziale\" OR \"lancio del razzo\" OR spazioporto"
-    },
-    {
-      "label": "Italiano (IT) 2",
-      "lang": "it",
-      "region": "Western Europe",
-      "hl": "it",
-      "gl": "IT",
-      "ceid": "IT:it",
-      "query": "\"detriti spaziali\" OR \"agenzia spaziale\""
-    },
-    {
-      "label": "Italiano (CH) 1",
-      "lang": "it",
-      "region": "Western Europe",
-      "hl": "it",
-      "gl": "CH",
-      "ceid": "CH:it",
-      "query": "\"industria spaziale\" OR \"lancio del razzo\" OR spazioporto"
-    },
-    {
-      "label": "Italiano (CH) 2",
-      "lang": "it",
-      "region": "Western Europe",
-      "hl": "it",
-      "gl": "CH",
-      "ceid": "CH:it",
-      "query": "\"detriti spaziali\" OR \"agenzia spaziale\""
-    },
-    {
-      "label": "Nederlands (NL) 1",
-      "lang": "nl",
-      "region": "Western Europe",
-      "hl": "nl",
-      "gl": "NL",
-      "ceid": "NL:nl",
-      "query": "ruimtevaartindustrie OR raketlancering OR ruimtehaven"
-    },
-    {
-      "label": "Nederlands (NL) 2",
-      "lang": "nl",
-      "region": "Western Europe",
-      "hl": "nl",
-      "gl": "NL",
-      "ceid": "NL:nl",
-      "query": "satellietconstellatie OR ruimteafval"
-    },
-    {
-      "label": "Nederlands (BE) 1",
-      "lang": "nl",
-      "region": "Western Europe",
-      "hl": "nl",
-      "gl": "BE",
-      "ceid": "BE:nl",
-      "query": "ruimtevaartindustrie OR raketlancering OR ruimtehaven"
-    },
-    {
-      "label": "Nederlands (BE) 2",
-      "lang": "nl",
-      "region": "Western Europe",
-      "hl": "nl",
-      "gl": "BE",
-      "ceid": "BE:nl",
-      "query": "satellietconstellatie OR ruimteafval"
-    },
-    {
-      "label": "Svenska 1",
-      "lang": "sv",
-      "region": "Western Europe",
-      "hl": "sv",
-      "gl": "SE",
-      "ceid": "SE:sv",
-      "query": "rymdindustri OR raketuppskjutning OR Esrange"
-    },
-    {
-      "label": "Svenska 2",
-      "lang": "sv",
-      "region": "Western Europe",
-      "hl": "sv",
-      "gl": "SE",
-      "ceid": "SE:sv",
-      "query": "rymdhamn OR rymdskrot"
-    },
-    {
-      "label": "Ελληνικά 1",
-      "lang": "el",
-      "region": "Western Europe",
-      "hl": "el",
-      "gl": "GR",
-      "ceid": "GR:el",
-      "query": "διαστημική βιομηχανία OR εκτόξευση πυραύλου OR διαστημόπλοιο"
-    },
-    {
-      "label": "Ελληνικά 2",
-      "lang": "el",
-      "region": "Western Europe",
-      "hl": "el",
-      "gl": "GR",
-      "ceid": "GR:el",
-      "query": "δορυφόρος εκτόξευση"
-    },
-    {
-      "label": "Polski 1",
-      "lang": "pl",
-      "region": "Eastern Europe",
-      "hl": "pl",
-      "gl": "PL",
-      "ceid": "PL:pl",
-      "query": "\"przemysł kosmiczny\" OR \"start rakiety\" OR kosmodrom"
-    },
-    {
-      "label": "Polski 2",
-      "lang": "pl",
-      "region": "Eastern Europe",
-      "hl": "pl",
-      "gl": "PL",
-      "ceid": "PL:pl",
-      "query": "\"konstelacja satelitów\" OR \"śmieci kosmiczne\""
-    },
-    {
-      "label": "Русский (RU) 1",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "RU",
-      "ceid": "RU:ru",
-      "query": "космическая отрасль OR запуск ракеты OR космодром"
-    },
-    {
-      "label": "Русский (RU) 2",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "RU",
-      "ceid": "RU:ru",
-      "query": "Роскосмос OR космический мусор"
-    },
-    {
-      "label": "Русский (KZ) 1",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "KZ",
-      "ceid": "KZ:ru",
-      "query": "космическая отрасль OR запуск ракеты OR космодром"
-    },
-    {
-      "label": "Русский (KZ) 2",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "KZ",
-      "ceid": "KZ:ru",
-      "query": "Роскосмос OR космический мусор"
-    },
-    {
-      "label": "Русский (BY) 1",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "BY",
-      "ceid": "BY:ru",
-      "query": "космическая отрасль OR запуск ракеты OR космодром"
-    },
-    {
-      "label": "Русский (BY) 2",
-      "lang": "ru",
-      "region": "Eastern Europe",
-      "hl": "ru",
-      "gl": "BY",
-      "ceid": "BY:ru",
-      "query": "Роскосмос OR космический мусор"
-    },
-    {
-      "label": "Українська 1",
-      "lang": "uk",
-      "region": "Eastern Europe",
-      "hl": "uk",
-      "gl": "UA",
-      "ceid": "UA:uk",
-      "query": "космічна галузь OR запуск ракети OR космодром"
-    },
-    {
-      "label": "Українська 2",
-      "lang": "uk",
-      "region": "Eastern Europe",
-      "hl": "uk",
-      "gl": "UA",
-      "ceid": "UA:uk",
-      "query": "супутник запуск OR космічне сміття"
-    },
-    {
-      "label": "Türkçe 1",
-      "lang": "tr",
-      "region": "MENA",
-      "hl": "tr",
-      "gl": "TR",
-      "ceid": "TR:tr",
-      "query": "uzay sanayi OR roket fırlatma OR uzay limanı"
-    },
-    {
-      "label": "Türkçe 2",
-      "lang": "tr",
-      "region": "MENA",
-      "hl": "tr",
-      "gl": "TR",
-      "ceid": "TR:tr",
-      "query": "uydu fırlatma OR uzay çöpü"
-    },
-    {
-      "label": "العربية (EG) 1",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "EG",
-      "ceid": "EG:ar",
-      "query": "\"صناعة الفضاء\" OR \"إطلاق صاروخ\" OR \"قمر صناعي\""
-    },
-    {
-      "label": "العربية (EG) 2",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "EG",
-      "ceid": "EG:ar",
-      "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
-    },
-    {
-      "label": "العربية (SA) 1",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "SA",
-      "ceid": "SA:ar",
-      "query": "\"صناعة الفضاء\" OR \"إطلاق صاروخ\" OR \"قمر صناعي\""
-    },
-    {
-      "label": "العربية (SA) 2",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "SA",
-      "ceid": "SA:ar",
-      "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
-    },
-    {
-      "label": "العربية (AE) 1",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "AE",
-      "ceid": "AE:ar",
-      "query": "\"صناعة الفضاء\" OR \"إطلاق صاروخ\" OR \"قمر صناعي\""
-    },
-    {
-      "label": "العربية (AE) 2",
-      "lang": "ar",
-      "region": "MENA",
-      "hl": "ar",
-      "gl": "AE",
-      "ceid": "AE:ar",
-      "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
-    },
-    {
-      "label": "עברית 1",
-      "lang": "he",
-      "region": "MENA",
-      "hl": "iw",
-      "gl": "IL",
-      "ceid": "IL:iw",
-      "query": "תעשיית החלל OR שיגור רקטה OR לוויין שיגור"
-    },
-    {
-      "label": "עברית 2",
-      "lang": "he",
-      "region": "MENA",
-      "hl": "iw",
-      "gl": "IL",
-      "ceid": "IL:iw",
-      "query": "סוכנות החלל"
-    },
-    {
-      "label": "فارسی 1",
-      "lang": "fa",
-      "region": "MENA",
-      "hl": "fa",
-      "gl": "IR",
-      "ceid": "IR:fa",
-      "query": "\"صنعت فضایی\" OR \"پرتاب ماهواره\" OR \"پایگاه فضایی\""
-    },
-    {
-      "label": "فارسی 2",
-      "lang": "fa",
-      "region": "MENA",
-      "hl": "fa",
-      "gl": "IR",
-      "ceid": "IR:fa",
-      "query": "\"سازمان فضایی\""
-    },
-    {
-      "label": "हिन्दी 1",
-      "lang": "hi",
-      "region": "South Asia",
-      "hl": "hi",
-      "gl": "IN",
-      "ceid": "IN:hi",
-      "query": "अंतरिक्ष उद्योग OR रॉकेट प्रक्षेपण OR उपग्रह प्रक्षेपण"
-    },
-    {
-      "label": "हिन्दी 2",
-      "lang": "hi",
-      "region": "South Asia",
-      "hl": "hi",
-      "gl": "IN",
-      "ceid": "IN:hi",
-      "query": "इसरो OR अंतरिक्ष नीति"
-    },
-    {
-      "label": "বাংলা (BD) 1",
-      "lang": "bn",
-      "region": "South Asia",
-      "hl": "bn",
-      "gl": "BD",
-      "ceid": "BD:bn",
-      "query": "মহাকাশ শিল্প OR রকেট উৎক্ষেপণ OR উপগ্রহ উৎক্ষেপণ"
-    },
-    {
-      "label": "বাংলা (BD) 2",
-      "lang": "bn",
-      "region": "South Asia",
-      "hl": "bn",
-      "gl": "BD",
-      "ceid": "BD:bn",
-      "query": "মহাকাশ সংস্থা"
-    },
-    {
-      "label": "বাংলা (IN) 1",
-      "lang": "bn",
-      "region": "South Asia",
-      "hl": "bn",
-      "gl": "IN",
-      "ceid": "IN:bn",
-      "query": "মহাকাশ শিল্প OR রকেট উৎক্ষেপণ OR উপগ্রহ উৎক্ষেপণ"
-    },
-    {
-      "label": "বাংলা (IN) 2",
-      "lang": "bn",
-      "region": "South Asia",
-      "hl": "bn",
-      "gl": "IN",
-      "ceid": "IN:bn",
-      "query": "মহাকাশ সংস্থা"
-    },
-    {
-      "label": "Bahasa Indonesia 1",
-      "lang": "id",
-      "region": "Southeast Asia",
-      "hl": "id",
-      "gl": "ID",
-      "ceid": "ID:id",
-      "query": "industri antariksa OR peluncuran roket OR bandar antariksa"
-    },
-    {
-      "label": "Bahasa Indonesia 2",
-      "lang": "id",
-      "region": "Southeast Asia",
-      "hl": "id",
-      "gl": "ID",
-      "ceid": "ID:id",
-      "query": "peluncuran satelit OR LAPAN BRIN"
-    },
-    {
-      "label": "Tiếng Việt 1",
-      "lang": "vi",
-      "region": "Southeast Asia",
-      "hl": "vi",
-      "gl": "VN",
-      "ceid": "VN:vi",
-      "query": "công nghiệp vũ trụ OR phóng tên lửa OR phóng vệ tinh"
-    },
-    {
-      "label": "Tiếng Việt 2",
-      "lang": "vi",
-      "region": "Southeast Asia",
-      "hl": "vi",
-      "gl": "VN",
-      "ceid": "VN:vi",
-      "query": "sân bay vũ trụ"
-    },
-    {
-      "label": "ไทย 1",
-      "lang": "th",
-      "region": "Southeast Asia",
-      "hl": "th",
-      "gl": "TH",
-      "ceid": "TH:th",
-      "query": "อุตสาหกรรมอวกาศ OR ปล่อยจรวด OR ดาวเทียม ปล่อย"
-    },
-    {
-      "label": "ไทย 2",
-      "lang": "th",
-      "region": "Southeast Asia",
-      "hl": "th",
-      "gl": "TH",
-      "ceid": "TH:th",
-      "query": "ท่าอวกาศยาน"
-    },
-    {
-      "label": "日本語 1",
-      "lang": "ja",
-      "region": "East Asia",
-      "hl": "ja",
-      "gl": "JP",
-      "ceid": "JP:ja",
-      "query": "宇宙産業 OR ロケット打ち上げ OR 人工衛星 打ち上げ"
-    },
-    {
-      "label": "日本語 2",
-      "lang": "ja",
-      "region": "East Asia",
-      "hl": "ja",
-      "gl": "JP",
-      "ceid": "JP:ja",
-      "query": "種子島 OR 宇宙政策"
-    },
-    {
-      "label": "简体中文 (CN) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "商业航天 OR 火箭发射 OR 卫星发射"
-    },
-    {
-      "label": "简体中文 (CN) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "文昌发射场 OR 空间碎片"
-    },
-    {
-      "label": "简体中文 (TW) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "商业航天 OR 火箭发射 OR 卫星发射"
-    },
-    {
-      "label": "简体中文 (TW) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "文昌发射场 OR 空间碎片"
-    },
-    {
-      "label": "简体中文 (HK) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "商业航天 OR 火箭发射 OR 卫星发射"
-    },
-    {
-      "label": "简体中文 (HK) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "文昌发射场 OR 空间碎片"
-    },
-    {
-      "label": "繁體中文 (CN) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "太空產業 OR 火箭發射 OR 衛星發射"
-    },
-    {
-      "label": "繁體中文 (CN) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-CN",
-      "gl": "CN",
-      "ceid": "CN:zh-Hans",
-      "query": "太空政策 OR 太空碎片"
-    },
-    {
-      "label": "繁體中文 (TW) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "太空產業 OR 火箭發射 OR 衛星發射"
-    },
-    {
-      "label": "繁體中文 (TW) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-TW",
-      "gl": "TW",
-      "ceid": "TW:zh-Hant",
-      "query": "太空政策 OR 太空碎片"
-    },
-    {
-      "label": "繁體中文 (HK) 1",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "太空產業 OR 火箭發射 OR 衛星發射"
-    },
-    {
-      "label": "繁體中文 (HK) 2",
-      "lang": "zh",
-      "region": "East Asia",
-      "hl": "zh-HK",
-      "gl": "HK",
-      "ceid": "HK:zh-Hant",
-      "query": "太空政策 OR 太空碎片"
-    },
-    {
-      "label": "한국어 1",
-      "lang": "ko",
-      "region": "East Asia",
-      "hl": "ko",
-      "gl": "KR",
-      "ceid": "KR:ko",
-      "query": "우주산업 OR 로켓 발사 OR 위성 발사"
-    },
-    {
-      "label": "한국어 2",
-      "lang": "ko",
-      "region": "East Asia",
-      "hl": "ko",
-      "gl": "KR",
-      "ceid": "KR:ko",
-      "query": "나로우주센터 OR 우주정책"
-    },
-    {
-      "label": "Kiswahili (KE) 1",
-      "lang": "sw",
-      "region": "Sub-Saharan Africa",
-      "hl": "sw",
-      "gl": "KE",
-      "ceid": "KE:sw",
-      "query": "\"sekta ya anga\" OR \"kurusha roketi\" OR \"setilaiti kurushwa\""
-    },
-    {
-      "label": "Kiswahili (KE) 2",
-      "lang": "sw",
-      "region": "Sub-Saharan Africa",
-      "hl": "sw",
-      "gl": "KE",
-      "ceid": "KE:sw",
-      "query": "\"shirika la anga\""
-    },
-    {
-      "label": "Kiswahili (TZ) 1",
-      "lang": "sw",
-      "region": "Sub-Saharan Africa",
-      "hl": "sw",
-      "gl": "TZ",
-      "ceid": "TZ:sw",
-      "query": "\"sekta ya anga\" OR \"kurusha roketi\" OR \"setilaiti kurushwa\""
-    },
-    {
-      "label": "Kiswahili (TZ) 2",
-      "lang": "sw",
-      "region": "Sub-Saharan Africa",
-      "hl": "sw",
-      "gl": "TZ",
-      "ceid": "TZ:sw",
-      "query": "\"shirika la anga\""
-    }
-  ],
-  "watchdog": [
-    {
-      "label": "Spaceport land & communities",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "spaceport protest OR \"launch site\" lawsuit OR spaceport \"indigenous land\" OR \"rocket launch\" community opposition"
-    },
-    {
-      "label": "Launch environmental impact",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"environmental impact\" spaceport OR rocket launch pollution OR launch emissions ozone OR reentry pollution satellites"
-    },
-    {
-      "label": "Militarisation of orbit",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"space weapons\" OR anti-satellite test OR \"militarisation of space\" OR \"space force\" budget OR \"Golden Dome\""
-    },
-    {
-      "label": "Debris, spectrum & astronomy",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "satellite constellation astronomers OR \"light pollution\" satellites OR \"orbital debris\" regulation OR radio spectrum satellites"
-    },
-    {
-      "label": "Mining, law & the commons",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "\"asteroid mining\" OR \"lunar resources\" law OR \"Outer Space Treaty\" OR \"Artemis Accords\" criticism OR COPUOS"
-    },
-    {
-      "label": "Subsidies & contracts",
-      "lang": "en",
-      "region": "Watchdog",
-      "hl": "en-US",
-      "gl": "US",
-      "ceid": "US:en",
-      "query": "SpaceX contract award OR \"space company\" subsidy OR launch contract protest GAO OR \"space industry\" tax break"
-    },
-    {
-      "label": "Brasil — Alcântara",
-      "lang": "pt",
-      "region": "Watchdog",
-      "hl": "pt-BR",
-      "gl": "BR",
-      "ceid": "BR:pt-419",
-      "query": "Alcântara quilombola base OR \"centro de lançamento\" comunidade OR \"impacto ambiental\" foguete"
-    },
-    {
-      "label": "América Latina — territorio",
-      "lang": "es",
-      "region": "Watchdog",
-      "hl": "es-419",
-      "gl": "MX",
-      "ceid": "MX:es-419",
-      "query": "puerto espacial protesta OR \"base de lanzamiento\" comunidad OR \"impacto ambiental\" cohete OR territorio indígena antena"
-    }
-  ]
+ "_note": "Wires for the space-front feed. harvest_space.py reads this and writes wire_space.json. 'query' is used only by the gnews block and is written in the language of that locale. The 'watchdog' block is English-language accountability searches — protest, lawsuit, land, pollution, militarisation — that the general desks under-report. Locale coverage is expanded: several country editions per language, and each query split into slices so no single search hits Google News's ~100-result cap.",
+ "direct": [
+  {
+   "name": "SpaceNews",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://spacenews.com/feed/"
+  },
+  {
+   "name": "NASASpaceflight",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://www.nasaspaceflight.com/feed/"
+  },
+  {
+   "name": "Spaceflight Now",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://spaceflightnow.com/feed/"
+  },
+  {
+   "name": "European Spaceflight",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://europeanspaceflight.com/feed/"
+  },
+  {
+   "name": "Orbital Today",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://orbitaltoday.com/feed/"
+  },
+  {
+   "name": "Via Satellite",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://www.satellitetoday.com/feed/"
+  },
+  {
+   "name": "The Space Review",
+   "lang": "en",
+   "region": "Trade press",
+   "url": "https://www.thespacereview.com/articles.xml"
+  },
+  {
+   "name": "Space Policy Online",
+   "lang": "en",
+   "region": "Policy",
+   "url": "https://spacepolicyonline.com/feed/"
+  },
+  {
+   "name": "Ars Technica — Space",
+   "lang": "en",
+   "region": "Science desk",
+   "url": "https://feeds.arstechnica.com/arstechnica/space"
+  },
+  {
+   "name": "Space.com",
+   "lang": "en",
+   "region": "Science desk",
+   "url": "https://www.space.com/feeds/all"
+  },
+  {
+   "name": "SpaceDaily",
+   "lang": "en",
+   "region": "Science desk",
+   "url": "https://www.spacedaily.com/spacedaily.xml"
+  },
+  {
+   "name": "Phys.org — Space",
+   "lang": "en",
+   "region": "Science desk",
+   "url": "https://phys.org/rss-feed/space-news/"
+  },
+  {
+   "name": "Universe Today",
+   "lang": "en",
+   "region": "Science desk",
+   "url": "https://www.universetoday.com/feed"
+  },
+  {
+   "name": "NASA",
+   "lang": "en",
+   "region": "Institutional",
+   "url": "https://www.nasa.gov/feed/"
+  },
+  {
+   "name": "NASA JPL",
+   "lang": "en",
+   "region": "Institutional",
+   "url": "https://www.jpl.nasa.gov/feeds/news/"
+  },
+  {
+   "name": "ESA — Space Transportation",
+   "lang": "en",
+   "region": "Institutional",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Space_Transportation"
+  },
+  {
+   "name": "ESA — Observing the Earth",
+   "lang": "en",
+   "region": "Institutional",
+   "url": "https://www.esa.int/rssfeed/Our_Activities/Observing_the_Earth"
+  },
+  {
+   "name": "Planetary Society",
+   "lang": "en",
+   "region": "Institutional",
+   "url": "https://www.planetary.org/rss/articles"
+  },
+  {
+   "name": "DLR (DE)",
+   "lang": "de",
+   "region": "Institutional",
+   "url": "https://www.dlr.de/de/aktuelles/nachrichten/rss"
+  }
+ ],
+ "gnews": [
+  {
+   "label": "English (US) · industry",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (US) · launch",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (US) 1",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (GB) · industry",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (GB) · launch",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (GB) 1",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (IN) · industry",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (IN) · launch",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (IN) 1",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (UK) (US) · industry",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (UK) (US) · launch",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (UK) (US) 1",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (UK) (GB) · industry",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (UK) (GB) · launch",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (UK) (GB) 1",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (UK) (IN) · industry",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (UK) (IN) · launch",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (UK) (IN) 1",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (India) (US) · industry",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "ISRO"
+  },
+  {
+   "label": "English (India) (US) · launch",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "Sriharikota"
+  },
+  {
+   "label": "English (India) (US) 1",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (India) (GB) · industry",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "ISRO"
+  },
+  {
+   "label": "English (India) (GB) · launch",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "Sriharikota"
+  },
+  {
+   "label": "English (India) (GB) 1",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (India) (IN) · industry",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "ISRO"
+  },
+  {
+   "label": "English (India) (IN) · launch",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "Sriharikota"
+  },
+  {
+   "label": "English (India) (IN) 1",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space industry\""
+  },
+  {
+   "label": "English (Aus) (AU) · industry",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (Aus) (AU) · launch",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (Aus) (AU) 1",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Aus) (US) · industry",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (Aus) (US) · launch",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (Aus) (US) 1",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Aus) (GB) · industry",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (Aus) (GB) · launch",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"rocket launch\""
+  },
+  {
+   "label": "English (Aus) (GB) 1",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (S. Africa) (ZA) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-ZA",
+   "gl": "ZA",
+   "ceid": "ZA:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (S. Africa) (ZA) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-ZA",
+   "gl": "ZA",
+   "ceid": "ZA:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (S. Africa) (ZA) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-ZA",
+   "gl": "ZA",
+   "ceid": "ZA:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (S. Africa) (US) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (S. Africa) (US) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (S. Africa) (US) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (S. Africa) (GB) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (S. Africa) (GB) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (S. Africa) (GB) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "spaceport"
+  },
+  {
+   "label": "English (Nigeria) (NG) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-NG",
+   "gl": "NG",
+   "ceid": "NG:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Nigeria) (NG) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-NG",
+   "gl": "NG",
+   "ceid": "NG:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Nigeria) (NG) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-NG",
+   "gl": "NG",
+   "ceid": "NG:en",
+   "query": "\"space programme\""
+  },
+  {
+   "label": "English (Nigeria) (US) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Nigeria) (US) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Nigeria) (US) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space programme\""
+  },
+  {
+   "label": "English (Nigeria) (GB) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Nigeria) (GB) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Nigeria) (GB) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space programme\""
+  },
+  {
+   "label": "English (Kenya) (KE) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-KE",
+   "gl": "KE",
+   "ceid": "KE:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Kenya) (KE) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-KE",
+   "gl": "KE",
+   "ceid": "KE:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Kenya) (KE) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-KE",
+   "gl": "KE",
+   "ceid": "KE:en",
+   "query": "\"ground station\""
+  },
+  {
+   "label": "English (Kenya) (US) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Kenya) (US) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Kenya) (US) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"ground station\""
+  },
+  {
+   "label": "English (Kenya) (GB) · industry",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space agency\""
+  },
+  {
+   "label": "English (Kenya) (GB) · launch",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (Kenya) (GB) 1",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"ground station\""
+  },
+  {
+   "label": "Español (ES) · industry",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (ES) · launch",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"lanzamiento de cohete\""
+  },
+  {
+   "label": "Español (ES) 1",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "puerto espacial"
+  },
+  {
+   "label": "Español (MX) · industry",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (MX) · launch",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"lanzamiento de cohete\""
+  },
+  {
+   "label": "Español (MX) 1",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "puerto espacial"
+  },
+  {
+   "label": "Español (AR) · industry",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (AR) · launch",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"lanzamiento de cohete\""
+  },
+  {
+   "label": "Español (AR) 1",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "puerto espacial"
+  },
+  {
+   "label": "Español (MX) (ES) · industry",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (MX) (ES) · launch",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"lanzamiento espacial\""
+  },
+  {
+   "label": "Español (MX) (ES) 1",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"agencia espacial\""
+  },
+  {
+   "label": "Español (MX) (MX) · industry",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (MX) (MX) · launch",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"lanzamiento espacial\""
+  },
+  {
+   "label": "Español (MX) (MX) 1",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"agencia espacial\""
+  },
+  {
+   "label": "Español (MX) (AR) · industry",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"industria espacial\""
+  },
+  {
+   "label": "Español (MX) (AR) · launch",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"lanzamiento espacial\""
+  },
+  {
+   "label": "Español (MX) (AR) 1",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"agencia espacial\""
+  },
+  {
+   "label": "Português (BR) · industry",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "\"indústria espacial\""
+  },
+  {
+   "label": "Português (BR) · launch",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "Alcântara base"
+  },
+  {
+   "label": "Português (BR) 1",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "\"lançamento de foguete\""
+  },
+  {
+   "label": "Português (PT) · industry",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "\"indústria espacial\""
+  },
+  {
+   "label": "Português (PT) · launch",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "Alcântara base"
+  },
+  {
+   "label": "Português (PT) 1",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "\"lançamento de foguete\""
+  },
+  {
+   "label": "Português (AO) · industry",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "\"indústria espacial\""
+  },
+  {
+   "label": "Português (AO) · launch",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "Alcântara base"
+  },
+  {
+   "label": "Português (AO) 1",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "\"lançamento de foguete\""
+  },
+  {
+   "label": "Français (FR) · industry",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "\"industrie spatiale\""
+  },
+  {
+   "label": "Français (FR) · launch",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "\"lancement de fusée\""
+  },
+  {
+   "label": "Français (FR) 1",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "Kourou"
+  },
+  {
+   "label": "Français (BE) · industry",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "\"industrie spatiale\""
+  },
+  {
+   "label": "Français (BE) · launch",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "\"lancement de fusée\""
+  },
+  {
+   "label": "Français (BE) 1",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "Kourou"
+  },
+  {
+   "label": "Français (CA) · industry",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "\"industrie spatiale\""
+  },
+  {
+   "label": "Français (CA) · launch",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "\"lancement de fusée\""
+  },
+  {
+   "label": "Français (CA) 1",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "Kourou"
+  },
+  {
+   "label": "Deutsch (DE) · industry",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "Raumfahrtindustrie"
+  },
+  {
+   "label": "Deutsch (DE) · launch",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "Raketenstart"
+  },
+  {
+   "label": "Deutsch (DE) 1",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "Weltraumbahnhof"
+  },
+  {
+   "label": "Deutsch (AT) · industry",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "Raumfahrtindustrie"
+  },
+  {
+   "label": "Deutsch (AT) · launch",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "Raketenstart"
+  },
+  {
+   "label": "Deutsch (AT) 1",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "Weltraumbahnhof"
+  },
+  {
+   "label": "Deutsch (CH) · industry",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "Raumfahrtindustrie"
+  },
+  {
+   "label": "Deutsch (CH) · launch",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "Raketenstart"
+  },
+  {
+   "label": "Deutsch (CH) 1",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "Weltraumbahnhof"
+  },
+  {
+   "label": "Italiano (IT) · industry",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "\"industria spaziale\""
+  },
+  {
+   "label": "Italiano (IT) · launch",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "\"lancio del razzo\""
+  },
+  {
+   "label": "Italiano (IT) 1",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "spazioporto"
+  },
+  {
+   "label": "Italiano (CH) · industry",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "\"industria spaziale\""
+  },
+  {
+   "label": "Italiano (CH) · launch",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "\"lancio del razzo\""
+  },
+  {
+   "label": "Italiano (CH) 1",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "spazioporto"
+  },
+  {
+   "label": "Nederlands (NL) · industry",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "NL",
+   "ceid": "NL:nl",
+   "query": "ruimtevaartindustrie"
+  },
+  {
+   "label": "Nederlands (NL) · launch",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "NL",
+   "ceid": "NL:nl",
+   "query": "raketlancering"
+  },
+  {
+   "label": "Nederlands (NL) 1",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "NL",
+   "ceid": "NL:nl",
+   "query": "ruimtehaven"
+  },
+  {
+   "label": "Nederlands (BE) · industry",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "BE",
+   "ceid": "BE:nl",
+   "query": "ruimtevaartindustrie"
+  },
+  {
+   "label": "Nederlands (BE) · launch",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "BE",
+   "ceid": "BE:nl",
+   "query": "raketlancering"
+  },
+  {
+   "label": "Nederlands (BE) 1",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "BE",
+   "ceid": "BE:nl",
+   "query": "ruimtehaven"
+  },
+  {
+   "label": "Svenska · industry",
+   "lang": "sv",
+   "region": "Western Europe",
+   "hl": "sv",
+   "gl": "SE",
+   "ceid": "SE:sv",
+   "query": "rymdindustri"
+  },
+  {
+   "label": "Svenska · launch",
+   "lang": "sv",
+   "region": "Western Europe",
+   "hl": "sv",
+   "gl": "SE",
+   "ceid": "SE:sv",
+   "query": "raketuppskjutning"
+  },
+  {
+   "label": "Svenska 1",
+   "lang": "sv",
+   "region": "Western Europe",
+   "hl": "sv",
+   "gl": "SE",
+   "ceid": "SE:sv",
+   "query": "Esrange"
+  },
+  {
+   "label": "Ελληνικά · industry",
+   "lang": "el",
+   "region": "Western Europe",
+   "hl": "el",
+   "gl": "GR",
+   "ceid": "GR:el",
+   "query": "διαστημική βιομηχανία"
+  },
+  {
+   "label": "Ελληνικά · launch",
+   "lang": "el",
+   "region": "Western Europe",
+   "hl": "el",
+   "gl": "GR",
+   "ceid": "GR:el",
+   "query": "εκτόξευση πυραύλου"
+  },
+  {
+   "label": "Ελληνικά 1",
+   "lang": "el",
+   "region": "Western Europe",
+   "hl": "el",
+   "gl": "GR",
+   "ceid": "GR:el",
+   "query": "διαστημόπλοιο"
+  },
+  {
+   "label": "Polski · industry",
+   "lang": "pl",
+   "region": "Eastern Europe",
+   "hl": "pl",
+   "gl": "PL",
+   "ceid": "PL:pl",
+   "query": "\"przemysł kosmiczny\""
+  },
+  {
+   "label": "Polski · launch",
+   "lang": "pl",
+   "region": "Eastern Europe",
+   "hl": "pl",
+   "gl": "PL",
+   "ceid": "PL:pl",
+   "query": "\"start rakiety\""
+  },
+  {
+   "label": "Polski 1",
+   "lang": "pl",
+   "region": "Eastern Europe",
+   "hl": "pl",
+   "gl": "PL",
+   "ceid": "PL:pl",
+   "query": "kosmodrom"
+  },
+  {
+   "label": "Русский (RU) · industry",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "космическая отрасль"
+  },
+  {
+   "label": "Русский (RU) · launch",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "запуск ракеты"
+  },
+  {
+   "label": "Русский (RU) 1",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "космодром"
+  },
+  {
+   "label": "Русский (KZ) · industry",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "космическая отрасль"
+  },
+  {
+   "label": "Русский (KZ) · launch",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "запуск ракеты"
+  },
+  {
+   "label": "Русский (KZ) 1",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "космодром"
+  },
+  {
+   "label": "Русский (BY) · industry",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "космическая отрасль"
+  },
+  {
+   "label": "Русский (BY) · launch",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "запуск ракеты"
+  },
+  {
+   "label": "Русский (BY) 1",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "космодром"
+  },
+  {
+   "label": "Українська · industry",
+   "lang": "uk",
+   "region": "Eastern Europe",
+   "hl": "uk",
+   "gl": "UA",
+   "ceid": "UA:uk",
+   "query": "космічна галузь"
+  },
+  {
+   "label": "Українська · launch",
+   "lang": "uk",
+   "region": "Eastern Europe",
+   "hl": "uk",
+   "gl": "UA",
+   "ceid": "UA:uk",
+   "query": "запуск ракети"
+  },
+  {
+   "label": "Українська 1",
+   "lang": "uk",
+   "region": "Eastern Europe",
+   "hl": "uk",
+   "gl": "UA",
+   "ceid": "UA:uk",
+   "query": "космодром"
+  },
+  {
+   "label": "Türkçe · industry",
+   "lang": "tr",
+   "region": "MENA",
+   "hl": "tr",
+   "gl": "TR",
+   "ceid": "TR:tr",
+   "query": "uzay sanayi"
+  },
+  {
+   "label": "Türkçe · launch",
+   "lang": "tr",
+   "region": "MENA",
+   "hl": "tr",
+   "gl": "TR",
+   "ceid": "TR:tr",
+   "query": "roket fırlatma"
+  },
+  {
+   "label": "Türkçe 1",
+   "lang": "tr",
+   "region": "MENA",
+   "hl": "tr",
+   "gl": "TR",
+   "ceid": "TR:tr",
+   "query": "uzay limanı"
+  },
+  {
+   "label": "العربية (EG) · industry",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "EG",
+   "ceid": "EG:ar",
+   "query": "\"صناعة الفضاء\""
+  },
+  {
+   "label": "العربية (EG) · launch",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "EG",
+   "ceid": "EG:ar",
+   "query": "\"إطلاق صاروخ\""
+  },
+  {
+   "label": "العربية (EG) 1",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "EG",
+   "ceid": "EG:ar",
+   "query": "\"قمر صناعي\""
+  },
+  {
+   "label": "العربية (SA) · industry",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "SA",
+   "ceid": "SA:ar",
+   "query": "\"صناعة الفضاء\""
+  },
+  {
+   "label": "العربية (SA) · launch",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "SA",
+   "ceid": "SA:ar",
+   "query": "\"إطلاق صاروخ\""
+  },
+  {
+   "label": "العربية (SA) 1",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "SA",
+   "ceid": "SA:ar",
+   "query": "\"قمر صناعي\""
+  },
+  {
+   "label": "العربية (AE) · industry",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "AE",
+   "ceid": "AE:ar",
+   "query": "\"صناعة الفضاء\""
+  },
+  {
+   "label": "العربية (AE) · launch",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "AE",
+   "ceid": "AE:ar",
+   "query": "\"إطلاق صاروخ\""
+  },
+  {
+   "label": "العربية (AE) 1",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "AE",
+   "ceid": "AE:ar",
+   "query": "\"قمر صناعي\""
+  },
+  {
+   "label": "עברית · industry",
+   "lang": "he",
+   "region": "MENA",
+   "hl": "iw",
+   "gl": "IL",
+   "ceid": "IL:iw",
+   "query": "תעשיית החלל"
+  },
+  {
+   "label": "עברית · launch",
+   "lang": "he",
+   "region": "MENA",
+   "hl": "iw",
+   "gl": "IL",
+   "ceid": "IL:iw",
+   "query": "שיגור רקטה"
+  },
+  {
+   "label": "עברית 1",
+   "lang": "he",
+   "region": "MENA",
+   "hl": "iw",
+   "gl": "IL",
+   "ceid": "IL:iw",
+   "query": "לוויין שיגור"
+  },
+  {
+   "label": "فارسی · industry",
+   "lang": "fa",
+   "region": "MENA",
+   "hl": "fa",
+   "gl": "IR",
+   "ceid": "IR:fa",
+   "query": "\"صنعت فضایی\""
+  },
+  {
+   "label": "فارسی · launch",
+   "lang": "fa",
+   "region": "MENA",
+   "hl": "fa",
+   "gl": "IR",
+   "ceid": "IR:fa",
+   "query": "\"پرتاب ماهواره\""
+  },
+  {
+   "label": "فارسی 1",
+   "lang": "fa",
+   "region": "MENA",
+   "hl": "fa",
+   "gl": "IR",
+   "ceid": "IR:fa",
+   "query": "\"پایگاه فضایی\""
+  },
+  {
+   "label": "हिन्दी · industry",
+   "lang": "hi",
+   "region": "South Asia",
+   "hl": "hi",
+   "gl": "IN",
+   "ceid": "IN:hi",
+   "query": "अंतरिक्ष उद्योग"
+  },
+  {
+   "label": "हिन्दी · launch",
+   "lang": "hi",
+   "region": "South Asia",
+   "hl": "hi",
+   "gl": "IN",
+   "ceid": "IN:hi",
+   "query": "रॉकेट प्रक्षेपण"
+  },
+  {
+   "label": "हिन्दी 1",
+   "lang": "hi",
+   "region": "South Asia",
+   "hl": "hi",
+   "gl": "IN",
+   "ceid": "IN:hi",
+   "query": "उपग्रह प्रक्षेपण"
+  },
+  {
+   "label": "বাংলা (BD) · industry",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "BD",
+   "ceid": "BD:bn",
+   "query": "মহাকাশ শিল্প"
+  },
+  {
+   "label": "বাংলা (BD) · launch",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "BD",
+   "ceid": "BD:bn",
+   "query": "রকেট উৎক্ষেপণ"
+  },
+  {
+   "label": "বাংলা (BD) 1",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "BD",
+   "ceid": "BD:bn",
+   "query": "উপগ্রহ উৎক্ষেপণ"
+  },
+  {
+   "label": "বাংলা (IN) · industry",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "IN",
+   "ceid": "IN:bn",
+   "query": "মহাকাশ শিল্প"
+  },
+  {
+   "label": "বাংলা (IN) · launch",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "IN",
+   "ceid": "IN:bn",
+   "query": "রকেট উৎক্ষেপণ"
+  },
+  {
+   "label": "বাংলা (IN) 1",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "IN",
+   "ceid": "IN:bn",
+   "query": "উপগ্রহ উৎক্ষেপণ"
+  },
+  {
+   "label": "Bahasa Indonesia · industry",
+   "lang": "id",
+   "region": "Southeast Asia",
+   "hl": "id",
+   "gl": "ID",
+   "ceid": "ID:id",
+   "query": "industri antariksa"
+  },
+  {
+   "label": "Bahasa Indonesia · launch",
+   "lang": "id",
+   "region": "Southeast Asia",
+   "hl": "id",
+   "gl": "ID",
+   "ceid": "ID:id",
+   "query": "peluncuran roket"
+  },
+  {
+   "label": "Bahasa Indonesia 1",
+   "lang": "id",
+   "region": "Southeast Asia",
+   "hl": "id",
+   "gl": "ID",
+   "ceid": "ID:id",
+   "query": "bandar antariksa"
+  },
+  {
+   "label": "Tiếng Việt · industry",
+   "lang": "vi",
+   "region": "Southeast Asia",
+   "hl": "vi",
+   "gl": "VN",
+   "ceid": "VN:vi",
+   "query": "công nghiệp vũ trụ"
+  },
+  {
+   "label": "Tiếng Việt · launch",
+   "lang": "vi",
+   "region": "Southeast Asia",
+   "hl": "vi",
+   "gl": "VN",
+   "ceid": "VN:vi",
+   "query": "phóng tên lửa"
+  },
+  {
+   "label": "Tiếng Việt 1",
+   "lang": "vi",
+   "region": "Southeast Asia",
+   "hl": "vi",
+   "gl": "VN",
+   "ceid": "VN:vi",
+   "query": "phóng vệ tinh"
+  },
+  {
+   "label": "ไทย · industry",
+   "lang": "th",
+   "region": "Southeast Asia",
+   "hl": "th",
+   "gl": "TH",
+   "ceid": "TH:th",
+   "query": "อุตสาหกรรมอวกาศ"
+  },
+  {
+   "label": "ไทย · launch",
+   "lang": "th",
+   "region": "Southeast Asia",
+   "hl": "th",
+   "gl": "TH",
+   "ceid": "TH:th",
+   "query": "ปล่อยจรวด"
+  },
+  {
+   "label": "ไทย 1",
+   "lang": "th",
+   "region": "Southeast Asia",
+   "hl": "th",
+   "gl": "TH",
+   "ceid": "TH:th",
+   "query": "ดาวเทียม ปล่อย"
+  },
+  {
+   "label": "日本語 · industry",
+   "lang": "ja",
+   "region": "East Asia",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "宇宙産業"
+  },
+  {
+   "label": "日本語 · launch",
+   "lang": "ja",
+   "region": "East Asia",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "ロケット打ち上げ"
+  },
+  {
+   "label": "日本語 1",
+   "lang": "ja",
+   "region": "East Asia",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "人工衛星 打ち上げ"
+  },
+  {
+   "label": "简体中文 (CN) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "商业航天"
+  },
+  {
+   "label": "简体中文 (CN) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "火箭发射"
+  },
+  {
+   "label": "简体中文 (CN) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "卫星发射"
+  },
+  {
+   "label": "繁體中文 (TW) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "商業航天"
+  },
+  {
+   "label": "繁體中文 (TW) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "火箭發射"
+  },
+  {
+   "label": "繁體中文 (TW) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "衛星發射"
+  },
+  {
+   "label": "繁體中文 (HK) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "商業航天"
+  },
+  {
+   "label": "繁體中文 (HK) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "火箭發射"
+  },
+  {
+   "label": "繁體中文 (HK) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "衞星發射"
+  },
+  {
+   "label": "繁體中文 (CN) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "太空產業"
+  },
+  {
+   "label": "繁體中文 (CN) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "火箭發射"
+  },
+  {
+   "label": "繁體中文 (CN) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "衛星發射"
+  },
+  {
+   "label": "繁體中文 (TW) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "太空產業"
+  },
+  {
+   "label": "繁體中文 (TW) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "火箭發射"
+  },
+  {
+   "label": "繁體中文 (TW) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "衛星發射"
+  },
+  {
+   "label": "繁體中文 (HK) · industry",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "太空產業"
+  },
+  {
+   "label": "繁體中文 (HK) · launch",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "火箭發射"
+  },
+  {
+   "label": "繁體中文 (HK) 1",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "衛星發射"
+  },
+  {
+   "label": "한국어 · industry",
+   "lang": "ko",
+   "region": "East Asia",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "query": "우주산업"
+  },
+  {
+   "label": "한국어 · launch",
+   "lang": "ko",
+   "region": "East Asia",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "query": "로켓 발사"
+  },
+  {
+   "label": "한국어 1",
+   "lang": "ko",
+   "region": "East Asia",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "query": "위성 발사"
+  },
+  {
+   "label": "Kiswahili (KE) · industry",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "KE",
+   "ceid": "KE:sw",
+   "query": "\"sekta ya anga\""
+  },
+  {
+   "label": "Kiswahili (KE) · launch",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "KE",
+   "ceid": "KE:sw",
+   "query": "\"kurusha roketi\""
+  },
+  {
+   "label": "Kiswahili (KE) 1",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "KE",
+   "ceid": "KE:sw",
+   "query": "\"setilaiti kurushwa\""
+  },
+  {
+   "label": "Kiswahili (TZ) · industry",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "TZ",
+   "ceid": "TZ:sw",
+   "query": "\"sekta ya anga\""
+  },
+  {
+   "label": "Kiswahili (TZ) · launch",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "TZ",
+   "ceid": "TZ:sw",
+   "query": "\"kurusha roketi\""
+  },
+  {
+   "label": "Kiswahili (TZ) 1",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "TZ",
+   "ceid": "TZ:sw",
+   "query": "\"setilaiti kurushwa\""
+  },
+  {
+   "label": "English (US) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (US) · military",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space force\""
+  },
+  {
+   "label": "English (US) · policy",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"launch licence\""
+  },
+  {
+   "label": "English (GB) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (GB) · military",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space force\""
+  },
+  {
+   "label": "English (GB) · policy",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"launch licence\""
+  },
+  {
+   "label": "English (IN) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (IN) · military",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space force\""
+  },
+  {
+   "label": "English (IN) · policy",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"launch licence\""
+  },
+  {
+   "label": "English (UK) (US) · orbit",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (UK) (US) · military",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space regulator\""
+  },
+  {
+   "label": "English (UK) (US) · policy",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "SaxaVord"
+  },
+  {
+   "label": "English (UK) (GB) · orbit",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (UK) (GB) · military",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space regulator\""
+  },
+  {
+   "label": "English (UK) (GB) · policy",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "SaxaVord"
+  },
+  {
+   "label": "English (UK) (IN) · orbit",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"satellite constellation\""
+  },
+  {
+   "label": "English (UK) (IN) · military",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space regulator\""
+  },
+  {
+   "label": "English (UK) (IN) · policy",
+   "lang": "en",
+   "region": "Western Europe",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "SaxaVord"
+  },
+  {
+   "label": "English (India) (US) · orbit",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (India) (US) · military",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space policy\""
+  },
+  {
+   "label": "English (India) (US) · policy",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "Gaganyaan"
+  },
+  {
+   "label": "English (India) (GB) · orbit",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (India) (GB) · military",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space policy\""
+  },
+  {
+   "label": "English (India) (GB) · policy",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "Gaganyaan"
+  },
+  {
+   "label": "English (India) (IN) · orbit",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"satellite launch\""
+  },
+  {
+   "label": "English (India) (IN) · military",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"space policy\""
+  },
+  {
+   "label": "English (India) (IN) · policy",
+   "lang": "en",
+   "region": "South Asia",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "Gaganyaan"
+  },
+  {
+   "label": "English (Aus) (AU) 2",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-AU",
+   "gl": "AU",
+   "ceid": "AU:en",
+   "query": "\"satellite constellation\" OR \"launch site\""
+  },
+  {
+   "label": "English (Aus) (US) 2",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"satellite constellation\" OR \"launch site\""
+  },
+  {
+   "label": "English (Aus) (GB) 2",
+   "lang": "en",
+   "region": "Oceania",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"satellite constellation\" OR \"launch site\""
+  },
+  {
+   "label": "English (S. Africa) (ZA) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-ZA",
+   "gl": "ZA",
+   "ceid": "ZA:en",
+   "query": "\"space industry\" OR \"ground station\""
+  },
+  {
+   "label": "English (S. Africa) (US) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space industry\" OR \"ground station\""
+  },
+  {
+   "label": "English (S. Africa) (GB) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space industry\" OR \"ground station\""
+  },
+  {
+   "label": "English (Nigeria) (NG) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-NG",
+   "gl": "NG",
+   "ceid": "NG:en",
+   "query": "\"ground station\" OR NASRDA"
+  },
+  {
+   "label": "English (Nigeria) (US) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"ground station\" OR NASRDA"
+  },
+  {
+   "label": "English (Nigeria) (GB) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"ground station\" OR NASRDA"
+  },
+  {
+   "label": "English (Kenya) (KE) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-KE",
+   "gl": "KE",
+   "ceid": "KE:en",
+   "query": "\"space programme\" OR Broglio"
+  },
+  {
+   "label": "English (Kenya) (US) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space programme\" OR Broglio"
+  },
+  {
+   "label": "English (Kenya) (GB) 2",
+   "lang": "en",
+   "region": "Sub-Saharan Africa",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"space programme\" OR Broglio"
+  },
+  {
+   "label": "Español (ES) 2",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "\"constelación de satélites\" OR PLD Space"
+  },
+  {
+   "label": "Español (MX) 2",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "\"constelación de satélites\" OR PLD Space"
+  },
+  {
+   "label": "Español (AR) 2",
+   "lang": "es",
+   "region": "Western Europe",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "\"constelación de satélites\" OR PLD Space"
+  },
+  {
+   "label": "Español (MX) (ES) 2",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es",
+   "gl": "ES",
+   "ceid": "ES:es",
+   "query": "satélite lanzamiento OR \"basura espacial\""
+  },
+  {
+   "label": "Español (MX) (MX) 2",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "satélite lanzamiento OR \"basura espacial\""
+  },
+  {
+   "label": "Español (MX) (AR) 2",
+   "lang": "es",
+   "region": "Latin America",
+   "hl": "es-419",
+   "gl": "AR",
+   "ceid": "AR:es-419",
+   "query": "satélite lanzamiento OR \"basura espacial\""
+  },
+  {
+   "label": "Português (BR) 2",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "\"agência espacial\" OR \"lixo espacial\""
+  },
+  {
+   "label": "Português (PT) 2",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "PT",
+   "ceid": "PT:pt-150",
+   "query": "\"agência espacial\" OR \"lixo espacial\""
+  },
+  {
+   "label": "Português (AO) 2",
+   "lang": "pt",
+   "region": "Latin America",
+   "hl": "pt-BR",
+   "gl": "AO",
+   "ceid": "AO:pt-150",
+   "query": "\"agência espacial\" OR \"lixo espacial\""
+  },
+  {
+   "label": "Français (FR) · orbit",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "Ariane"
+  },
+  {
+   "label": "Français (FR) · military",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "\"débris spatiaux\""
+  },
+  {
+   "label": "Français (FR) · policy",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "FR",
+   "ceid": "FR:fr",
+   "query": "\"base spatiale\""
+  },
+  {
+   "label": "Français (BE) · orbit",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "Ariane"
+  },
+  {
+   "label": "Français (BE) · military",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "\"débris spatiaux\""
+  },
+  {
+   "label": "Français (BE) · policy",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "BE",
+   "ceid": "BE:fr",
+   "query": "\"base spatiale\""
+  },
+  {
+   "label": "Français (CA) · orbit",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "Ariane"
+  },
+  {
+   "label": "Français (CA) · military",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "\"débris spatiaux\""
+  },
+  {
+   "label": "Français (CA) · policy",
+   "lang": "fr",
+   "region": "Western Europe",
+   "hl": "fr",
+   "gl": "CA",
+   "ceid": "CA:fr",
+   "query": "\"base spatiale\""
+  },
+  {
+   "label": "Deutsch (DE) 2",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "DE",
+   "ceid": "DE:de",
+   "query": "Satellitenkonstellation OR Weltraumschrott"
+  },
+  {
+   "label": "Deutsch (AT) 2",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "AT",
+   "ceid": "AT:de",
+   "query": "Satellitenkonstellation OR Weltraumschrott"
+  },
+  {
+   "label": "Deutsch (CH) 2",
+   "lang": "de",
+   "region": "Western Europe",
+   "hl": "de",
+   "gl": "CH",
+   "ceid": "CH:de",
+   "query": "Satellitenkonstellation OR Weltraumschrott"
+  },
+  {
+   "label": "Italiano (IT) 2",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "IT",
+   "ceid": "IT:it",
+   "query": "\"detriti spaziali\" OR \"agenzia spaziale\""
+  },
+  {
+   "label": "Italiano (CH) 2",
+   "lang": "it",
+   "region": "Western Europe",
+   "hl": "it",
+   "gl": "CH",
+   "ceid": "CH:it",
+   "query": "\"detriti spaziali\" OR \"agenzia spaziale\""
+  },
+  {
+   "label": "Nederlands (NL) 2",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "NL",
+   "ceid": "NL:nl",
+   "query": "satellietconstellatie OR ruimteafval"
+  },
+  {
+   "label": "Nederlands (BE) 2",
+   "lang": "nl",
+   "region": "Western Europe",
+   "hl": "nl",
+   "gl": "BE",
+   "ceid": "BE:nl",
+   "query": "satellietconstellatie OR ruimteafval"
+  },
+  {
+   "label": "Svenska 2",
+   "lang": "sv",
+   "region": "Western Europe",
+   "hl": "sv",
+   "gl": "SE",
+   "ceid": "SE:sv",
+   "query": "rymdhamn OR rymdskrot"
+  },
+  {
+   "label": "Ελληνικά 2",
+   "lang": "el",
+   "region": "Western Europe",
+   "hl": "el",
+   "gl": "GR",
+   "ceid": "GR:el",
+   "query": "δορυφόρος εκτόξευση"
+  },
+  {
+   "label": "Polski 2",
+   "lang": "pl",
+   "region": "Eastern Europe",
+   "hl": "pl",
+   "gl": "PL",
+   "ceid": "PL:pl",
+   "query": "\"konstelacja satelitów\" OR \"śmieci kosmiczne\""
+  },
+  {
+   "label": "Русский (RU) 2",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "RU",
+   "ceid": "RU:ru",
+   "query": "Роскосмос OR космический мусор"
+  },
+  {
+   "label": "Русский (KZ) 2",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "KZ",
+   "ceid": "KZ:ru",
+   "query": "Роскосмос OR космический мусор"
+  },
+  {
+   "label": "Русский (BY) 2",
+   "lang": "ru",
+   "region": "Eastern Europe",
+   "hl": "ru",
+   "gl": "BY",
+   "ceid": "BY:ru",
+   "query": "Роскосмос OR космический мусор"
+  },
+  {
+   "label": "Українська 2",
+   "lang": "uk",
+   "region": "Eastern Europe",
+   "hl": "uk",
+   "gl": "UA",
+   "ceid": "UA:uk",
+   "query": "супутник запуск OR космічне сміття"
+  },
+  {
+   "label": "Türkçe 2",
+   "lang": "tr",
+   "region": "MENA",
+   "hl": "tr",
+   "gl": "TR",
+   "ceid": "TR:tr",
+   "query": "uydu fırlatma OR uzay çöpü"
+  },
+  {
+   "label": "العربية (EG) 2",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "EG",
+   "ceid": "EG:ar",
+   "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
+  },
+  {
+   "label": "العربية (SA) 2",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "SA",
+   "ceid": "SA:ar",
+   "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
+  },
+  {
+   "label": "العربية (AE) 2",
+   "lang": "ar",
+   "region": "MENA",
+   "hl": "ar",
+   "gl": "AE",
+   "ceid": "AE:ar",
+   "query": "\"وكالة الفضاء\" OR \"ميناء فضائي\""
+  },
+  {
+   "label": "עברית 2",
+   "lang": "he",
+   "region": "MENA",
+   "hl": "iw",
+   "gl": "IL",
+   "ceid": "IL:iw",
+   "query": "סוכנות החלל"
+  },
+  {
+   "label": "فارسی 2",
+   "lang": "fa",
+   "region": "MENA",
+   "hl": "fa",
+   "gl": "IR",
+   "ceid": "IR:fa",
+   "query": "\"سازمان فضایی\""
+  },
+  {
+   "label": "हिन्दी 2",
+   "lang": "hi",
+   "region": "South Asia",
+   "hl": "hi",
+   "gl": "IN",
+   "ceid": "IN:hi",
+   "query": "इसरो OR अंतरिक्ष नीति"
+  },
+  {
+   "label": "বাংলা (BD) 2",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "BD",
+   "ceid": "BD:bn",
+   "query": "মহাকাশ সংস্থা"
+  },
+  {
+   "label": "বাংলা (IN) 2",
+   "lang": "bn",
+   "region": "South Asia",
+   "hl": "bn",
+   "gl": "IN",
+   "ceid": "IN:bn",
+   "query": "মহাকাশ সংস্থা"
+  },
+  {
+   "label": "Bahasa Indonesia 2",
+   "lang": "id",
+   "region": "Southeast Asia",
+   "hl": "id",
+   "gl": "ID",
+   "ceid": "ID:id",
+   "query": "peluncuran satelit OR LAPAN BRIN"
+  },
+  {
+   "label": "Tiếng Việt 2",
+   "lang": "vi",
+   "region": "Southeast Asia",
+   "hl": "vi",
+   "gl": "VN",
+   "ceid": "VN:vi",
+   "query": "sân bay vũ trụ"
+  },
+  {
+   "label": "ไทย 2",
+   "lang": "th",
+   "region": "Southeast Asia",
+   "hl": "th",
+   "gl": "TH",
+   "ceid": "TH:th",
+   "query": "ท่าอวกาศยาน"
+  },
+  {
+   "label": "日本語 2",
+   "lang": "ja",
+   "region": "East Asia",
+   "hl": "ja",
+   "gl": "JP",
+   "ceid": "JP:ja",
+   "query": "種子島 OR 宇宙政策"
+  },
+  {
+   "label": "简体中文 (CN) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "文昌发射场 OR 空间碎片"
+  },
+  {
+   "label": "繁體中文 (TW) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "文昌發射場 OR 空間碎片"
+  },
+  {
+   "label": "繁體中文 (HK) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "文昌發射場 OR 空間碎片"
+  },
+  {
+   "label": "繁體中文 (CN) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-CN",
+   "gl": "CN",
+   "ceid": "CN:zh-Hans",
+   "query": "太空政策 OR 太空碎片"
+  },
+  {
+   "label": "繁體中文 (TW) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-TW",
+   "gl": "TW",
+   "ceid": "TW:zh-Hant",
+   "query": "太空政策 OR 太空碎片"
+  },
+  {
+   "label": "繁體中文 (HK) 2",
+   "lang": "zh",
+   "region": "East Asia",
+   "hl": "zh-HK",
+   "gl": "HK",
+   "ceid": "HK:zh-Hant",
+   "query": "太空政策 OR 太空碎片"
+  },
+  {
+   "label": "한국어 2",
+   "lang": "ko",
+   "region": "East Asia",
+   "hl": "ko",
+   "gl": "KR",
+   "ceid": "KR:ko",
+   "query": "나로우주센터 OR 우주정책"
+  },
+  {
+   "label": "Kiswahili (KE) 2",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "KE",
+   "ceid": "KE:sw",
+   "query": "\"shirika la anga\""
+  },
+  {
+   "label": "Kiswahili (TZ) 2",
+   "lang": "sw",
+   "region": "Sub-Saharan Africa",
+   "hl": "sw",
+   "gl": "TZ",
+   "ceid": "TZ:sw",
+   "query": "\"shirika la anga\""
+  },
+  {
+   "label": "English (US) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"orbital debris\""
+  },
+  {
+   "label": "English (GB) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-GB",
+   "gl": "GB",
+   "ceid": "GB:en",
+   "query": "\"orbital debris\""
+  },
+  {
+   "label": "English (IN) · orbit",
+   "lang": "en",
+   "region": "North America",
+   "hl": "en-IN",
+   "gl": "IN",
+   "ceid": "IN:en",
+   "query": "\"orbital debris\""
+  }
+ ],
+ "watchdog": [
+  {
+   "label": "Spaceport land & communities",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "spaceport protest OR \"launch site\" lawsuit OR spaceport \"indigenous land\" OR \"rocket launch\" community opposition"
+  },
+  {
+   "label": "Launch environmental impact",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"environmental impact\" spaceport OR rocket launch pollution OR launch emissions ozone OR reentry pollution satellites"
+  },
+  {
+   "label": "Militarisation of orbit",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"space weapons\" OR anti-satellite test OR \"militarisation of space\" OR \"space force\" budget OR \"Golden Dome\""
+  },
+  {
+   "label": "Debris, spectrum & astronomy",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "satellite constellation astronomers OR \"light pollution\" satellites OR \"orbital debris\" regulation OR radio spectrum satellites"
+  },
+  {
+   "label": "Mining, law & the commons",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "\"asteroid mining\" OR \"lunar resources\" law OR \"Outer Space Treaty\" OR \"Artemis Accords\" criticism OR COPUOS"
+  },
+  {
+   "label": "Subsidies & contracts",
+   "lang": "en",
+   "region": "Watchdog",
+   "hl": "en-US",
+   "gl": "US",
+   "ceid": "US:en",
+   "query": "SpaceX contract award OR \"space company\" subsidy OR launch contract protest GAO OR \"space industry\" tax break"
+  },
+  {
+   "label": "Brasil — Alcântara",
+   "lang": "pt",
+   "region": "Watchdog",
+   "hl": "pt-BR",
+   "gl": "BR",
+   "ceid": "BR:pt-419",
+   "query": "Alcântara quilombola base OR \"centro de lançamento\" comunidade OR \"impacto ambiental\" foguete"
+  },
+  {
+   "label": "América Latina — territorio",
+   "lang": "es",
+   "region": "Watchdog",
+   "hl": "es-419",
+   "gl": "MX",
+   "ceid": "MX:es-419",
+   "query": "puerto espacial protesta OR \"base de lanzamiento\" comunidad OR \"impacto ambiental\" cohete OR territorio indígena antena"
+  }
+ ]
 }
